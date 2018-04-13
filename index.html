@@ -132,6 +132,7 @@ limitations under the License.
         let index = 0;
         let data;
         progress.hidden = true;
+<<<<<<< HEAD
         let image = document.querySelector('#image');
         // Use the canvas to get image data
         let canvas = document.createElement('canvas');
@@ -179,12 +180,16 @@ limitations under the License.
           }
           return printData;
         }
+=======
+
+>>>>>>> parent of c12bbc0... dede
         function handleError(error) {
           console.log(error);
           progress.hidden = true;
           printCharacteristic = null;
           dialog.open();
         }
+<<<<<<< HEAD
         function sendNextImageDataBatch(resolve, reject) {
           // Can only write 512 bytes at a time to the characteristic
           // Need to send the image data in 512 byte batches
@@ -213,6 +218,9 @@ limitations under the License.
             sendNextImageDataBatch(resolve, reject);
           });
         }
+=======
+
+>>>>>>> parent of c12bbc0... dede
         function sendTextData() {
           // Get the bytes for the text
           let encoder = new TextEncoder("utf-8");
