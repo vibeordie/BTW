@@ -91,7 +91,7 @@ limitations under the License.
   </head>
   <body unresolved>
     <div id="cards">
-      <paper-card heading="BtMobile1">
+      <paper-card heading="BtMobile1.1">
         <div class="card-content">
           <paper-progress id="progress" indeterminate></paper-progress>
         </div>
@@ -144,7 +144,7 @@ limitations under the License.
         }
         function sendPrinterData() {
           // Print an image followed by the text
-          .then(sendTextData)
+          sendTextData()
           .then(() => {
             progress.hidden = true;
           })
