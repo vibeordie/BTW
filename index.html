@@ -120,7 +120,7 @@ limitations under the License.
 
       <paper-dialog id="dialog">
         <h2>Error</h2>
-        <p>Could not connect to bluetooth device!</p>
+        <p>No se pudo conectar a la impresora!</p>
       </paper-dialog>
     </div>
 
@@ -252,8 +252,8 @@ limitations under the License.
               }]
             })
             .then(device => {
-              console.log('> Found ' + device.name);
-              console.log('Connecting to GATT Server...');
+              console.log('> Encontrada ' + device.name);
+              console.log('conectando al server gatt...');
               return device.gatt.connect();
             })
             .then(server => server.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb"))
