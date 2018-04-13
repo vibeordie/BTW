@@ -97,11 +97,11 @@ limitations under the License.
         </div>
       </paper-card>
 
-      <paper-card id="logo">
+<!--       <paper-card id="logo">
         <div class="card-content">
           <image id="image" src="logo-black.png" width="200px"></image>
         </div>
-      </paper-card>
+      </paper-card> -->
 
       <paper-card>
         <div class="card-content">
@@ -132,7 +132,7 @@ limitations under the License.
         let index = 0;
         let data;
         progress.hidden = true;
-        let image = document.querySelector('#image');
+<!--         let image = document.querySelector('#image'); -->
         // Use the canvas to get image data
         let canvas = document.createElement('canvas');
         // Canvas dimensions need to be a multiple of 40 for this printer
@@ -140,19 +140,19 @@ limitations under the License.
         canvas.height = 120;
         let context = canvas.getContext("2d");
         context.drawImage(image, 0, 0, canvas.width, canvas.height);
-        let imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
+<!--         let imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
         function getDarkPixel(x, y) {
           // Return the pixels that will be printed black
           let red = imageData[((canvas.width * y) + x) * 4];
           let green = imageData[((canvas.width * y) + x) * 4 + 1];
           let blue = imageData[((canvas.width * y) + x) * 4 + 2];
           return (red + green + blue) > 0 ? 1 : 0;
-        }
-        function getImagePrintData() {
+        } -->
+<!--         function getImagePrintData() {
           if (imageData == null) {
             console.log('No image to print!');
             return new Uint8Array([]);
-          }
+          } -->
           // Each 8 pixels in a row is represented by a byte
           let printData = new Uint8Array(canvas.width / 8 * canvas.height + 8);
           let offset = 0;
@@ -206,13 +206,13 @@ limitations under the License.
             }
           }
         }
-        function sendImageData() {
+<!--         function sendImageData() {
           index = 0;
           data = getImagePrintData();
           return new Promise(function(resolve, reject) {
             sendNextImageDataBatch(resolve, reject);
           });
-        }
+        } -->
         function sendTextData() {
           // Get the bytes for the text
           let encoder = new TextEncoder("utf-8");
@@ -224,7 +224,7 @@ limitations under the License.
         }
         function sendPrinterData() {
           // Print an image followed by the text
-          sendImageData()
+          sendTextData()
           .then(sendTextData)
           .then(() => {
             progress.hidden = true;
