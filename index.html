@@ -91,7 +91,7 @@ limitations under the License.
   </head>
   <body unresolved>
     <div id="cards">
-      <paper-card heading="00001801-0000-1000-8000-00805f9b34fb">
+      <paper-card heading="0000180a-0000-1000-8000-00805f9b34fb">
         <div class="card-content">
           <paper-progress id="progress" indeterminate></paper-progress>
         </div>
@@ -155,7 +155,7 @@ limitations under the License.
           if (printCharacteristic == null) {
             navigator.bluetooth.requestDevice({
               filters: [{
-                services: ['00001801-0000-1000-8000-00805f9b34fb']
+                services: ['0000180a-0000-1000-8000-00805f9b34fb']
               }]
             })
             .then(device => {
@@ -163,7 +163,7 @@ limitations under the License.
               console.log('Connecting to GATT Server...');
               return device.gatt.connect();
             })
-            .then(server => server.getPrimaryService("00001801-0000-1000-8000-00805f9b34fb"))
+            .then(server => server.getPrimaryService("0000180a-0000-1000-8000-00805f9b34fb"))
             .then(service => service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb"))
 			//.then(service => service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb"))
             .then(characteristic => {
