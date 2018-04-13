@@ -13,8 +13,8 @@ limitations under the License.
 -->
 <html>
   <head>
-    <title>Bluetooth Printer</title>
-    <meta name="description" content="Print text and images to a Bluetooth Printer with a Web Bluetooth app.">
+    <title>Impresora Bluetooth</title>
+    <meta name="description" content="Imprimir texto e imagen desde una impresora bluetooth china">
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -91,33 +91,33 @@ limitations under the License.
   </head>
   <body unresolved>
     <div id="cards">
-      <paper-card heading="Mobile Printer test1">
+      <paper-card heading="Bluetooth Printer">
         <div class="card-content">
           <paper-progress id="progress" indeterminate></paper-progress>
         </div>
       </paper-card>
 
-<!--       <paper-card id="logo">
+      <paper-card id="logo">
         <div class="card-content">
           <image id="image" src="logo-black.png" width="200px"></image>
-        </div>
-      </paper-card> -->
-
-      <paper-card>
-        <div class="card-content">
-          <paper-textarea id="message" label="Enter Message"></paper-textarea>
         </div>
       </paper-card>
 
       <paper-card>
         <div class="card-content">
-          <paper-button id="print" raised class="colorful">Imprimir</paper-button>
+          <paper-textarea id="message" label="Colocar un Mensaje"></paper-textarea>
+        </div>
+      </paper-card>
+
+      <paper-card>
+        <div class="card-content">
+          <paper-button id="print" raised class="colorful">Imprmir</paper-button>
         </div>
       </paper-card>
 
       <paper-dialog id="dialog">
         <h2>Error</h2>
-        <p>Could not connect to bluetooth device!</p>
+        <p>No se pudo conectar al dispositivo!</p>
       </paper-dialog>
     </div>
 
@@ -132,7 +132,7 @@ limitations under the License.
         let index = 0;
         let data;
         progress.hidden = true;
-<!--         let image = document.querySelector('#image'); -->
+        let image = document.querySelector('#image');
         // Use the canvas to get image data
         let canvas = document.createElement('canvas');
         // Canvas dimensions need to be a multiple of 40 for this printer
@@ -140,8 +140,8 @@ limitations under the License.
         canvas.height = 120;
         let context = canvas.getContext("2d");
         context.drawImage(image, 0, 0, canvas.width, canvas.height);
-<!--         let imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
-        function getDarkPixel(x, y) {
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
+<!--         function getDarkPixel(x, y) {
           // Return the pixels that will be printed black
           let red = imageData[((canvas.width * y) + x) * 4];
           let green = imageData[((canvas.width * y) + x) * 4 + 1];
@@ -152,7 +152,7 @@ limitations under the License.
           if (imageData == null) {
             console.log('No image to print!');
             return new Uint8Array([]);
-          } -->
+          }
           // Each 8 pixels in a row is represented by a byte
           let printData = new Uint8Array(canvas.width / 8 * canvas.height + 8);
           let offset = 0;
@@ -178,14 +178,14 @@ limitations under the License.
             }
           }
           return printData;
-        }
+        } -->
         function handleError(error) {
           console.log(error);
           progress.hidden = true;
           printCharacteristic = null;
           dialog.open();
         }
-        function sendNextImageDataBatch(resolve, reject) {
+<!--         function sendNextImageDataBatch(resolve, reject) {
           // Can only write 512 bytes at a time to the characteristic
           // Need to send the image data in 512 byte batches
           if (index + 512 < data.length) {
@@ -205,7 +205,7 @@ limitations under the License.
               resolve();
             }
           }
-        }
+        } -->
 <!--         function sendImageData() {
           index = 0;
           data = getImagePrintData();
@@ -224,7 +224,7 @@ limitations under the License.
         }
         function sendPrinterData() {
           // Print an image followed by the text
-          sendTextData()
+          <!-- sendTextData() -->
           .then(sendTextData)
           .then(() => {
             progress.hidden = true;
