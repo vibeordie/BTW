@@ -136,8 +136,8 @@ limitations under the License.
         // Use the canvas to get image data
         let canvas = document.createElement('canvas');
         // Canvas dimensions need to be a multiple of 40 for this printer
-        canvas.width = 120;
-        canvas.height = 120;
+        canvas.width = 58;
+        canvas.height = 58;
         let context = canvas.getContext("2d");
         context.drawImage(image, 0, 0, canvas.width, canvas.height);
         let imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
@@ -224,8 +224,7 @@ limitations under the License.
         }
         function sendPrinterData() {
           // Print an image followed by the text
-          sendImageData()
-          .then(sendTextData)
+          sendTextData()
           .then(() => {
             progress.hidden = true;
           })
