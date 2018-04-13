@@ -14,7 +14,6 @@ limitations under the License.
 <html>
   <head>
     <title>Bluetooth Printer</title>
-
     <meta name="description" content="Print text and images to a Bluetooth Printer with a Web Bluetooth app.">
 
     <meta charset="utf-8">
@@ -97,7 +96,7 @@ limitations under the License.
           <paper-progress id="progress" indeterminate></paper-progress>
         </div>
       </paper-card>
-	  
+
       <paper-card id="logo">
         <div class="card-content">
           <image id="image" src="logo-black.png" width="200px"></image>
@@ -137,8 +136,8 @@ limitations under the License.
         // Use the canvas to get image data
         let canvas = document.createElement('canvas');
         // Canvas dimensions need to be a multiple of 40 for this printer
-        canvas.width = 58;
-        canvas.height = 58;
+        canvas.width = 120;
+        canvas.height = 120;
         let context = canvas.getContext("2d");
         context.drawImage(image, 0, 0, canvas.width, canvas.height);
         let imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
@@ -225,7 +224,8 @@ limitations under the License.
         }
         function sendPrinterData() {
           // Print an image followed by the text
-          sendTextData()
+          sendImageData()
+          .then(sendTextData)
           .then(() => {
             progress.hidden = true;
           })
