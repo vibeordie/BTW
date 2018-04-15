@@ -139,7 +139,7 @@ limitations under the License.
           // Add line feed + carriage return chars to text
           let text = encoder.encode(message.value + '\u000A\u000D');
           return printCharacteristic.writeValue(text).then(() => {
-            console.log('Write done.');
+            console.log('Write done.' + message.value);
           });
         }
         function sendPrinterData() {
@@ -163,7 +163,7 @@ limitations under the License.
               console.log('Connecting to GATT Server...');
               return device.gatt.connect();
             })
-            .then(server => server.getPrimaryService("0000180a-0000-1000-8000-00805f9b34fb"))
+            .then(server => server.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb"))
             .then(service => service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb"))
 			//.then(service => service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb"))
             .then(characteristic => {
