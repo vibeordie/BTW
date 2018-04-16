@@ -99,7 +99,7 @@ limitations under the License.
 
       <paper-card id="logo">
         <div class="card-content">
-          <image id="image" src="" width="200px"></image>
+          <image id="image" src="logo-black.png" width="200px"></image>
         </div>
       </paper-card>
 
@@ -163,8 +163,8 @@ limitations under the License.
           printData[3] = 0;  // Normal 203.2 DPI
           printData[4] = canvas.width / 8; // Number of horizontal data bits (LSB)
           printData[5] = 0; // Number of horizontal data bits (MSB)
-          printData[6] = canvas.height % 128; // Number of vertical data bits (LSB)
-          printData[7] = canvas.height / 128;  // Number of vertical data bits (MSB)
+          printData[6] = canvas.height % 256; // Number of vertical data bits (LSB)
+          printData[7] = canvas.height / 256;  // Number of vertical data bits (MSB)
           offset = 7;
           // Loop through image rows in bytes
           for (let i = 0; i < canvas.height; ++i) {
@@ -224,7 +224,8 @@ limitations under the License.
         }
         function sendPrinterData() {
           // Print an image followed by the text
-          sendTextData()
+          sendImageData()
+          .then(sendTextData)
           .then(() => {
             progress.hidden = true;
           })
@@ -232,7 +233,7 @@ limitations under the License.
         }
         printButton.addEventListener('click', function () {
           progress.hidden = false;
-          while (printCharacteristic == null) {
+          if (printCharacteristic == null) {
             navigator.bluetooth.requestDevice({
               filters: [{
                 services: ['000018f0-0000-1000-8000-00805f9b34fb']
