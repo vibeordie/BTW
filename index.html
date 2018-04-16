@@ -163,8 +163,8 @@ limitations under the License.
           printData[3] = 0;  // Normal 203.2 DPI
           printData[4] = canvas.width / 8; // Number of horizontal data bits (LSB)
           printData[5] = 0; // Number of horizontal data bits (MSB)
-          printData[6] = canvas.height % 256; // Number of vertical data bits (LSB)
-          printData[7] = canvas.height / 256;  // Number of vertical data bits (MSB)
+          printData[6] = canvas.height % 128; // Number of vertical data bits (LSB)
+          printData[7] = canvas.height / 128;  // Number of vertical data bits (MSB)
           offset = 7;
           // Loop through image rows in bytes
           for (let i = 0; i < canvas.height; ++i) {
@@ -188,9 +188,9 @@ limitations under the License.
         function sendNextImageDataBatch(resolve, reject) {
           // Can only write 512 bytes at a time to the characteristic
           // Need to send the image data in 512 byte batches
-          if (index + 512 < data.length) {
+          if (index + 20 < data.length) {
             printCharacteristic.writeValue(data.slice(index, index + 512)).then(() => {
-              index += 512;
+              index += 20;
               sendNextImageDataBatch(resolve, reject);
             })
             .catch(error => reject(error));
@@ -224,8 +224,7 @@ limitations under the License.
         }
         function sendPrinterData() {
           // Print an image followed by the text
-          sendImageData()
-          .then(sendTextData)
+          sendTextData()
           .then(() => {
             progress.hidden = true;
           })
