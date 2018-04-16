@@ -99,7 +99,7 @@ limitations under the License.
 
       <paper-card id="logo">
         <div class="card-content">
-          <image id="image" src="" width="200px"></image>
+          <image id="image" src="tt.png" width="200px"></image>
         </div>
       </paper-card>
 
@@ -224,9 +224,9 @@ limitations under the License.
         }
         function sendPrinterData() {
           // Print an image followed by the text
-          sendTextData()
-		  //sendImageData()
-          //.then(sendTextData)
+          //sendTextData()
+		  sendImageData()
+          .then(sendTextData)
           .then(() => {
             progress.hidden = true;
           })
