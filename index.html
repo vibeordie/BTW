@@ -156,8 +156,9 @@ limitations under the License.
           if (printCharacteristic == null) {
             navigator.bluetooth.requestDevice({
               filters: [{
-                services: ['000018f0-0000-1000-8000-00805f9b34fb', '00001800-0000-1000-8000-00805f9b34fb', '00001801-0000-1000-8000-00805f9b34fb', '0000180A-0000-1000-8000-00805f9b34fb']
-              }]
+                services: ['000018f0-0000-1000-8000-00805f9b34fb']
+              // '00001800-0000-1000-8000-00805f9b34fb', '00001801-0000-1000-8000-00805f9b34fb', '0000180A-0000-1000-8000-00805f9b34fb'
+			  }]
             })
             .then(device => {
               console.log('> Found ' + device.name);
