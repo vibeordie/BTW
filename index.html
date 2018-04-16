@@ -189,7 +189,7 @@ limitations under the License.
           // Can only write 512 bytes at a time to the characteristic
           // Need to send the image data in 512 byte batches
           if (index + 20 < data.length) {
-            printCharacteristic.writeValue(data.slice(index, index + 512)).then(() => {
+            printCharacteristic.writeValue(data.slice(index, index + 20)).then(() => {
               index += 20;
               sendNextImageDataBatch(resolve, reject);
             })
@@ -232,7 +232,7 @@ limitations under the License.
         }
         printButton.addEventListener('click', function () {
           progress.hidden = false;
-          if (printCharacteristic == null) {
+          while (printCharacteristic == null) {
             navigator.bluetooth.requestDevice({
               filters: [{
                 services: ['000018f0-0000-1000-8000-00805f9b34fb']
