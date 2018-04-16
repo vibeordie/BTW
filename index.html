@@ -99,7 +99,7 @@ limitations under the License.
 
       <paper-card id="logo">
         <div class="card-content">
-          <image id="image" src="logott.png" width="176px"></image>
+          <image id="image" src="cok.png" width="200px"></image>
         </div>
       </paper-card>
 
@@ -206,29 +206,7 @@ limitations under the License.
             }
           }
         }
-		function sendNextTextDataBatch(resolve, reject) {
-		  console.log(text);
-          // Can only write 512 bytes at a time to the characteristic
-          // Need to send the image data in 512 byte batches
-          if (index + 20 < text.length) {
-            printCharacteristic.writeValue(text.slice(index, index + 20)).then(() => {
-              index += 20;
-              sendNextTextDataBatch(resolve, reject);
-            })
-            .catch(error => reject(error));
-          } else {
-            // Send the last bytes
-            if (index < text.length) {
-              printCharacteristic.writeValue(text.slice(index, text.length)).then(() => {
-                resolve();
-              })
-              .catch(error => reject(error));
-            } else {
-              resolve();
-            }
-          }
-        }
-        function sendImageData() {
+		function sendImageData() {
           index = 0;
           data = getImagePrintData();
           return new Promise(function(resolve, reject) {
@@ -236,14 +214,12 @@ limitations under the License.
           });
         }
         function sendTextData() {
-		  index = 0
           // Get the bytes for the text
           let encoder = new TextEncoder("utf-8");
           // Add line feed + carriage return chars to text
-          let text = encoder.encode(message.value + '\u000A\u000D');
-		  console.log("SendTextData");
-          return new Promise(function(resolve, reject) {
-            sendNextTextDataBatch(resolve, reject);
+          let text = encoder.encode(message.value+ '\u000A\u000D');
+          return printCharacteristic.writeValue(text.slice('20', text.lenght).then(() => {
+            console.log('Write done.');
           });
         }
         function sendPrinterData() {
