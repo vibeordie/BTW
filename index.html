@@ -13,7 +13,7 @@ limitations under the License.
 -->
 <html>
   <head>
-    <title>BLET MOBILE</title>
+    <title>Tower Mobile Print</title>
     <meta name="description" content="Print text and images to a Bluetooth Printer with a Web Bluetooth app.">
 
     <meta charset="utf-8">
@@ -99,7 +99,7 @@ limitations under the License.
 
       <paper-card id="logo">
         <div class="card-content">
-          <image id="image" src="cok.png" width="200px"></image>
+          <image id="image" src="tt.png" width="200px"></image>
         </div>
       </paper-card>
 
@@ -136,8 +136,8 @@ limitations under the License.
         // Use the canvas to get image data
         let canvas = document.createElement('canvas');
         // Canvas dimensions need to be a multiple of 40 for this printer
-        canvas.width = 80;
-        canvas.height = 80;
+        canvas.width = 200;
+        canvas.height = 151;
         let context = canvas.getContext("2d");
         context.drawImage(image, 0, 0, canvas.width, canvas.height);
         let imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
