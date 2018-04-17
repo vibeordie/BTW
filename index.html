@@ -239,7 +239,7 @@ limitations under the License.
 		function sendTextData() {
 			textindex = 0;
 			// Get the bytes for the text
-			let encoder = new TextEncoder("Latin-1");
+			let encoder = new TextEncoder("utf-8");
 			// Add line feed + carriage return chars to text
 			textdata = encoder.encode(message.value + '\u000A\u000D');
 			return new Promise(function (resolve, reject) {
