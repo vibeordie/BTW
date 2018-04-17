@@ -13,7 +13,7 @@ limitations under the License.
 -->
 <html>
   <head>
-    <title>Tower Mobile Print</title>
+    <title>Tower Mobile Print v1</title>
     <meta name="description" content="Print text and images to a Bluetooth Printer with a Web Bluetooth app.">
 
     <meta charset="utf-8">
@@ -213,17 +213,17 @@ limitations under the License.
             sendNextImageDataBatch(resolve, reject);
           });
         }
-		function sendNextTextDataBatch(resolve, reject) {
+        function sendNextTextDataBatch(resolve, reject) {
           // Can only write 512 bytes at a time to the characteristic
           // Need to send the image data in 512 byte batches
-		  textindex = data.index;
-          if (textindex + 20 < textdata.length) {
+          textindex = data.index;
+		  if (textindex + 20 < textdata.length) {
             printCharacteristic.writeValue(textdata.slice(textindex, textindex + 20)).then(() => {
               textindex += 20;
-              sendNextImageDataBatch(resolve, reject);
+              sendNextTextDataBatch(resolve, reject);
             })
             .catch(error => reject(error));
-           else {
+          } else {
             // Send the last bytes
             if (textindex < textdata.length) {
               printCharacteristic.writeValue(textdata.slice(textindex, textdata.length)).then(() => {
@@ -245,7 +245,6 @@ limitations under the License.
 				sendNextTextDataBatch(resolve, reject);
 			});
 		}
-
         function sendPrinterData() {
           // Print an image followed by the text
 		  sendTextData()
