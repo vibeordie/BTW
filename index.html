@@ -91,7 +91,7 @@ limitations under the License.
   </head>
   <body unresolved>
     <div id="cards">
-      <paper-card heading="v2">
+      <paper-card heading="Ticket Printer">
         <div class="card-content">
           <paper-progress id="progress" indeterminate></paper-progress>
         </div>
@@ -105,19 +105,19 @@ limitations under the License.
 
       <paper-card>
         <div class="card-content">
-          <paper-textarea id="message" label="Enter Message"></paper-textarea>
+          <paper-textarea id="message" label="Colocar ticket"></paper-textarea>
         </div>
       </paper-card>
 
       <paper-card>
         <div class="card-content">
-          <paper-button id="print" raised class="colorful">Print</paper-button>
+          <paper-button id="Imprmir" raised class="colorful">Print</paper-button>
         </div>
       </paper-card>
 
       <paper-dialog id="dialog">
         <h2>Error</h2>
-        <p>Could not connect to bluetooth device!</p>
+        <p>No se pudo conectar con el dispositivo bluetooth!</p>
       </paper-dialog>
     </div>
 
@@ -239,7 +239,7 @@ limitations under the License.
 		function sendTextData() {
 			textindex = 0;
 			// Get the bytes for the text
-			let encoder = new TextEncoder("utf-8");
+			let encoder = new TextEncoder("Latin-1");
 			// Add line feed + carriage return chars to text
 			textdata = encoder.encode(message.value + '\u000A\u000D');
 			return new Promise(function (resolve, reject) {
