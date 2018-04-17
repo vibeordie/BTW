@@ -185,33 +185,7 @@ limitations under the License.
           printCharacteristic = null;
           dialog.open();
         }
-		function sendNextTextDataBatch(resolve, reject) {
-			// Can only write 20 bytes at a time to the characteristic
-			// Need to send the image data in 20 byte batches
-			if (index + 20 < data.length) {
-				printCharacteristic.writeValue(data.slice(index, index + 20)).then(() = > {
-					index += 20;
-				sendNextTextDataBatch(resolve, reject);
-			})
-			.
-				catch(error = > reject(error)
-			)
-				;
-			} else {
-				// Mandar los últimos bytes que queden
-				if (index < data.length) {
-					printCharacteristic.writeValue(data.slice(index, data.length)).then(() = > {
-						resolve();
-				})
-				.
-					catch(error = > reject(error)
-				)
-					;
-				} else {
-					resolve();
-				}
-			}
-		}
+
         function sendNextImageDataBatch(resolve, reject) {
           // Can only write 512 bytes at a time to the characteristic
           // Need to send the image data in 512 byte batches
@@ -221,7 +195,7 @@ limitations under the License.
               sendNextImageDataBatch(resolve, reject);
             })
             .catch(error => reject(error));
-          } else {
+           else {
             // Send the last bytes
             if (index < data.length) {
               printCharacteristic.writeValue(data.slice(index, data.length)).then(() => {
@@ -240,12 +214,33 @@ limitations under the License.
             sendNextImageDataBatch(resolve, reject);
           });
         }
+		function sendNextTextDataBatch(resolve, reject) {
+          // Can only write 512 bytes at a time to the characteristic
+          // Need to send the image data in 512 byte batches
+          if (textindex + 20 < textdata.length) {
+            printCharacteristic.writeValue(textdata.slice(textindex, textindex + 20)).then(() => {
+              textindex += 20;
+              sendNextImageDataBatch(resolve, reject);
+            })
+            .catch(error => reject(error));
+           else {
+            // Send the last bytes
+            if (textindex < textdata.length) {
+              printCharacteristic.writeValue(textdata.slice(textindex, textdata.length)).then(() => {
+                resolve();
+              })
+              .catch(error => reject(error));
+            } else {
+              resolve();
+            }
+          }
+        }
 		function sendTextData() {
-			index = 0;
+			textindex = 0;
 			// Get the bytes for the text
 			let encoder = new TextEncoder("utf-8");
 			// Add line feed + carriage return chars to text
-			data = encoder.encode(message.value + '\u000A\u000D');
+			textdata = encoder.encode(message.value + '\u000A\u000D');
 			return new Promise(function (resolve, reject) {
 				sendNextTextDataBatch(resolve, reject);
 			});
