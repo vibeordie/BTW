@@ -91,11 +91,7 @@ limitations under the License.
   </head>
   <body unresolved>
     <div id="cards">
-<<<<<<< HEAD
-      <paper-card heading="Tower V1">
-=======
-      <paper-card heading="v1">
->>>>>>> parent of 3d347e8... v2
+      <paper-card heading="Bluetooth Printer">
         <div class="card-content">
           <paper-progress id="progress" indeterminate></paper-progress>
         </div>
@@ -103,7 +99,7 @@ limitations under the License.
 
       <paper-card id="logo">
         <div class="card-content">
-          <image id="image" src="tt.png" width="200px"></image>
+          <image id="image" src="logo-black.png" width="200px"></image>
         </div>
       </paper-card>
 
@@ -137,13 +133,14 @@ limitations under the License.
         let data;
 		let textdata;
 		let textindex = 0;
+		
         progress.hidden = true;
         let image = document.querySelector('#image');
         // Use the canvas to get image data
         let canvas = document.createElement('canvas');
         // Canvas dimensions need to be a multiple of 40 for this printer
-        canvas.width = 200;
-        canvas.height = 300;
+        canvas.width = 120;
+        canvas.height = 120;
         let context = canvas.getContext("2d");
         context.drawImage(image, 0, 0, canvas.width, canvas.height);
         let imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
@@ -212,13 +209,6 @@ limitations under the License.
             }
           }
         }
-        function sendImageData() {
-          index = 0;
-          data = getImagePrintData();
-          return new Promise(function(resolve, reject) {
-            sendNextImageDataBatch(resolve, reject);
-          });
-        }
 		function sendNextTextDataBatch(resolve, reject) {
           // Can only write 512 bytes at a time to the characteristic
           // Need to send the image data in 512 byte batches
@@ -239,6 +229,13 @@ limitations under the License.
               resolve();
             }
           }
+        }
+        function sendImageData() {
+          index = 0;
+          data = getImagePrintData();
+          return new Promise(function(resolve, reject) {
+            sendNextImageDataBatch(resolve, reject);
+          });
         }
         function sendTextData() {
 		  textindex = 0;
