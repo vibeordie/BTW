@@ -222,12 +222,7 @@ limitations under the License.
 		function sendNextTextDataBatch(resolve, reject) {
           // Can only write 512 bytes at a time to the characteristic
           // Need to send the image data in 512 byte batches
-<<<<<<< HEAD
-          if (textindex + 20 < textdata.length) {
-=======
-          textindex = data.index;
 		  if (textindex + 20 < textdata.length) {
->>>>>>> parent of 3d347e8... v2
             printCharacteristic.writeValue(textdata.slice(textindex, textindex + 20)).then(() => {
               textindex += 20;
               sendNextTextDataBatch(resolve, reject);
@@ -253,9 +248,6 @@ limitations under the License.
           textdata = encoder.encode(message.value + '\u000A\u000D');
 		  return new Promise(function(resolve, reject) {
             sendNextTextImageDataBatch(resolve, reject);
-          });
-          return printCharacteristic.writeValue(textdata).then(() => {
-            console.log('Write done.');
           });
         }
         function sendPrinterData() {
