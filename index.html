@@ -13,7 +13,7 @@ limitations under the License.
 -->
 <html>
   <head>
-    <title>Tower Mobile Print</title>
+    <title>Bluetooth Printer</title>
     <meta name="description" content="Print text and images to a Bluetooth Printer with a Web Bluetooth app.">
 
     <meta charset="utf-8">
@@ -91,7 +91,7 @@ limitations under the License.
   </head>
   <body unresolved>
     <div id="cards">
-      <paper-card heading="Ticket Printer Test">
+      <paper-card heading="Tower V1">
         <div class="card-content">
           <paper-progress id="progress" indeterminate></paper-progress>
         </div>
@@ -105,19 +105,19 @@ limitations under the License.
 
       <paper-card>
         <div class="card-content">
-          <paper-textarea id="message" label="Colocar ticket"></paper-textarea>
+          <paper-textarea id="message" label="Enter Message"></paper-textarea>
         </div>
       </paper-card>
 
       <paper-card>
         <div class="card-content">
-          <paper-button id="Imprmir" raised class="colorful">Print</paper-button>
+          <paper-button id="print" raised class="colorful">Print</paper-button>
         </div>
       </paper-card>
 
       <paper-dialog id="dialog">
         <h2>Error</h2>
-        <p>No se pudo conectar con el dispositivo bluetooth!</p>
+        <p>Could not connect to bluetooth device!</p>
       </paper-dialog>
     </div>
 
@@ -131,7 +131,7 @@ limitations under the License.
         let printCharacteristic;
         let index = 0;
         let data;
-		let textindex = 0;
+		let textindex;
 		let textdata;
         progress.hidden = true;
         let image = document.querySelector('#image');
@@ -139,7 +139,7 @@ limitations under the License.
         let canvas = document.createElement('canvas');
         // Canvas dimensions need to be a multiple of 40 for this printer
         canvas.width = 200;
-        canvas.height = 151;
+        canvas.height = 300;
         let context = canvas.getContext("2d");
         context.drawImage(image, 0, 0, canvas.width, canvas.height);
         let imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
@@ -208,18 +208,17 @@ limitations under the License.
             }
           }
         }
-		function sendImageData() {
+        function sendImageData() {
           index = 0;
           data = getImagePrintData();
           return new Promise(function(resolve, reject) {
             sendNextImageDataBatch(resolve, reject);
           });
         }
-        function sendNextTextDataBatch(resolve, reject) {
+		function sendNextTextDataBatch(resolve, reject) {
           // Can only write 512 bytes at a time to the characteristic
           // Need to send the image data in 512 byte batches
-          textindex = data.index;
-		  if (textindex + 20 < textdata.length) {
+          if (textindex + 20 < textdata.length) {
             printCharacteristic.writeValue(textdata.slice(textindex, textindex + 20)).then(() => {
               textindex += 20;
               sendNextTextDataBatch(resolve, reject);
@@ -237,19 +236,22 @@ limitations under the License.
             }
           }
         }
-		function sendTextData() {
-			textindex = 0;
-			// Get the bytes for the text
-			let encoder = new TextEncoder("utf-8");
-			// Add line feed + carriage return chars to text
-			textdata = encoder.encode(message.value + '\u000A\u000D');
-			return new Promise(function (resolve, reject) {
-				sendNextTextDataBatch(resolve, reject);
-			});
-		}
+        function sendTextData() {
+		  textindex = 0;
+          // Get the bytes for the text
+          let encoder = new TextEncoder("utf-8");
+          // Add line feed + carriage return chars to text
+          textdata = encoder.encode(message.value + '\u000A\u000D');
+		  return new Promise(function(resolve, reject) {
+            sendNextTextImageDataBatch(resolve, reject);
+          });
+          return printCharacteristic.writeValue(textdata).then(() => {
+            console.log('Write done.');
+          });
+        }
         function sendPrinterData() {
           // Print an image followed by the text
-		  sendImageData()
+          sendImageData()
           .then(sendTextData)
           .then(() => {
             progress.hidden = true;
