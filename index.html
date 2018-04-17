@@ -185,7 +185,6 @@ limitations under the License.
           printCharacteristic = null;
           dialog.open();
         }
-
         function sendNextImageDataBatch(resolve, reject) {
           // Can only write 512 bytes at a time to the characteristic
           // Need to send the image data in 512 byte batches
@@ -195,7 +194,7 @@ limitations under the License.
               sendNextImageDataBatch(resolve, reject);
             })
             .catch(error => reject(error));
-           else {
+          } else {
             // Send the last bytes
             if (index < data.length) {
               printCharacteristic.writeValue(data.slice(index, data.length)).then(() => {
@@ -217,6 +216,7 @@ limitations under the License.
 		function sendNextTextDataBatch(resolve, reject) {
           // Can only write 512 bytes at a time to the characteristic
           // Need to send the image data in 512 byte batches
+		  textindex = data.index;
           if (textindex + 20 < textdata.length) {
             printCharacteristic.writeValue(textdata.slice(textindex, textindex + 20)).then(() => {
               textindex += 20;
