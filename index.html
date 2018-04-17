@@ -91,7 +91,7 @@ limitations under the License.
   </head>
   <body unresolved>
     <div id="cards">
-      <paper-card heading="Intento 1">
+      <paper-card heading="Version Final 1.0">
         <div class="card-content">
           <paper-progress id="progress" indeterminate></paper-progress>
         </div>
@@ -139,8 +139,8 @@ limitations under the License.
         // Use the canvas to get image data
         let canvas = document.createElement('canvas');
         // Canvas dimensions need to be a multiple of 40 for this printer
-        canvas.width = 120;
-        canvas.height = 120;
+        canvas.width = 200;
+        canvas.height = 151;
         let context = canvas.getContext("2d");
         context.drawImage(image, 0, 0, canvas.width, canvas.height);
         let imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
