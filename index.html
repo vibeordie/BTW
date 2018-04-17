@@ -13,7 +13,7 @@ limitations under the License.
 -->
 <html>
   <head>
-    <title>Tower Mobile Print v1</title>
+    <title>Tower Mobile Print</title>
     <meta name="description" content="Print text and images to a Bluetooth Printer with a Web Bluetooth app.">
 
     <meta charset="utf-8">
@@ -91,7 +91,7 @@ limitations under the License.
   </head>
   <body unresolved>
     <div id="cards">
-      <paper-card heading="Bluetooth Printer">
+      <paper-card heading="v1">
         <div class="card-content">
           <paper-progress id="progress" indeterminate></paper-progress>
         </div>
@@ -247,9 +247,8 @@ limitations under the License.
 		}
         function sendPrinterData() {
           // Print an image followed by the text
-		  sendTextData()
-		  //sendImageData()
-          //.then(sendTextData)
+		  sendImageData()
+          .then(sendTextData)
           .then(() => {
             progress.hidden = true;
           })
