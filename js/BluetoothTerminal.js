@@ -225,6 +225,7 @@ class BluetoothTerminal {
         then((characteristic) => this._startNotifications(characteristic)).
         catch((error) => {
           this._log(error);
+		  connect();
           return Promise.reject(error);
         });
   }
