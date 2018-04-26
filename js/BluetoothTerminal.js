@@ -222,6 +222,16 @@ class BluetoothTerminal {
   _connectToDevice(device) {
     return (device ? Promise.resolve(device) : this._requestBluetoothDevice()).
         then((device) => this._connectDeviceAndCacheCharacteristic(device)).
+		then((device) => this._connectDeviceAndCacheCharacteristic(device)).
+		then((device) => this._connectDeviceAndCacheCharacteristic(device)).
+		then((device) => this._connectDeviceAndCacheCharacteristic(device)).
+		then((device) => this._connectDeviceAndCacheCharacteristic(device)).
+		then((device) => this._connectDeviceAndCacheCharacteristic(device)).
+		then((device) => this._connectDeviceAndCacheCharacteristic(device)).
+		then((device) => this._connectDeviceAndCacheCharacteristic(device)).
+		then((device) => this._connectDeviceAndCacheCharacteristic(device)).
+		then((device) => this._connectDeviceAndCacheCharacteristic(device)).
+		then((device) => this._connectDeviceAndCacheCharacteristic(device)).
         then((characteristic) => this._startNotifications(characteristic)).
         catch((error) => {
           this._log(error);
