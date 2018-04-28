@@ -170,9 +170,9 @@ href="automatic-reconnect-async-await.html">Automatic Reconnect (Async Await)</a
 function onButtonClick() {
   bluetoothDevice = null;
   log('Requesting any Bluetooth Device...');
-  navigator.bluetooth.requestDevice({
+  navigator.bluetooth.requestDevice(
      filters: ['000018f0-0000-1000-8000-00805f9b34fb']
-     })
+     )
   .then(device => {
     bluetoothDevice = device;
     bluetoothDevice.addEventListener('gattserverdisconnected', onDisconnected);
