@@ -119,7 +119,7 @@ limitations under the License.
 
   <body unresolved>
     <div id="cards">
-      <paper-card heading="Conect&Print v1">
+      <paper-card heading="Conect&Print v2">
         <div class="card-content">
           <paper-progress id="progress" indeterminate></paper-progress>
         </div>
@@ -454,6 +454,18 @@ function connect() {
     });
 }
 
+function onDisconnectButtonClick() {
+  if (!bluetoothDevice) {
+    return;
+  }
+  log('Disconnecting from Bluetooth Device...');
+  if (bluetoothDevice.gatt.connected) {
+    bluetoothDevice.gatt.disconnect();
+  } else {
+    log('> Bluetooth Device is already disconnected');
+  }
+}
+
 function onDisconnected() {
   log('> Bluetooth Device disconnected');
   connect();
@@ -490,6 +502,15 @@ function time(text) {
     if (isWebBluetoothEnabled()) {
       ChromeSamples.clearLog();
       onButtonClick();
+    }
+  });
+  document.querySelector('#disconnectbtn').addEventListener('click', function(event) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    if (isWebBluetoothEnabled()) {
+      ChromeSamples.clearLog();
+      onDisconnectButtonClick();
     }
   });
 </script>
