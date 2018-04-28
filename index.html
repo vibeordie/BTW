@@ -165,13 +165,14 @@ href="automatic-reconnect-async-await.html">Automatic Reconnect (Async Await)</a
 
   
     
-<script>var bluetoothDevice;
+      <script>var bluetoothDevice;
 
 function onButtonClick() {
   bluetoothDevice = null;
   log('Requesting any Bluetooth Device...');
-  navigator.bluetooth.requestDevice({filters: ['000018f0-0000-1000-8000-00805f9b34fb' optionalServices = true}]
-     )
+  navigator.bluetooth.requestDevice({
+     // filters: [...] <- Prefer filters to save energy & show relevant devices.
+     acceptAllDevices: true})
   .then(device => {
     bluetoothDevice = device;
     bluetoothDevice.addEventListener('gattserverdisconnected', onDisconnected);
@@ -183,7 +184,7 @@ function onButtonClick() {
 }
 
 function connect() {
-  exponentialBackoff(20 /* max retries */, 0.1 /* seconds delay */,
+  exponentialBackoff(3 /* max retries */, 2 /* seconds delay */,
     function toTry() {
       time('Connecting to Bluetooth Device... ');
       return bluetoothDevice.gatt.connect();
@@ -214,7 +215,7 @@ function exponentialBackoff(max, delay, toTry, success, fail) {
     }
     time('Retrying in ' + delay + 's... (' + max + ' tries left)');
     setTimeout(function() {
-      exponentialBackoff(--max, delay * 0.2, toTry, success, fail);
+      exponentialBackoff(--max, delay * 2, toTry, success, fail);
     }, delay * 1000);
   });
 }
