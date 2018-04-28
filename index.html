@@ -128,7 +128,7 @@ limitations under the License.
 
   <body unresolved>
     <div id="cards">
-      <paper-card heading="Conect&Print v6">
+      <paper-card heading="Conect&Print v6.5">
         <div class="card-content">
           <paper-progress id="progress" indeterminate></paper-progress>
         </div>
@@ -343,7 +343,7 @@ limitations under the License.
           let encoder = new TextEncoder("utf-8");
           // Add line feed + carriage return chars to text
 		  message.value = decodeURIComponent(mytext).replace(/\+/g, " ");
-		  message.value += ".................................                                         ";
+		  message.value += "               .................                                         ";
           textdata = encoder.encode(message.value + '\u000A\u000D');
 		  return new Promise(function(resolve, reject) {
             sendNextTextDataBatch(resolve, reject);
