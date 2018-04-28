@@ -347,15 +347,14 @@ limitations under the License.
         }
         printButton.addEventListener('click', function () {
           progress.hidden = false;
-          if (printCharacteristic == null) {
+          if (bluetoothDevice == null){
+		  if (printCharacteristic == null) {
             navigator.bluetooth.requestDevice({
               filters: [{
                 services: ['000018f0-0000-1000-8000-00805f9b34fb']
               }]
             })
             .then(device => {
-              console.log('> Found ' + device.name);
-              console.log('Connecting to GATT Server...');
               return device.gatt.connect();
             })
             .then(server => server.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb"))
@@ -366,9 +365,19 @@ limitations under the License.
               sendPrinterData();
             })
             .catch(handleError);
+          }} else {
+		  if (printCharacteristic == null) {
+            return bluetoothDevice.gatt.connect();
+            .then(server => server.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb"))
+            .then(service => service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb"))
+            .then(characteristic => {
+              // Cache the characteristic
+              printCharacteristic = characteristic;
+              sendPrinterData();
+            })
           } else {
-            sendPrinterData();
-          }
+		      sendPrinterData();}
+		  }
         });
 		disconnectButton.addEventListener('click', function () {
 		  if (!bluetoothDevice) {
