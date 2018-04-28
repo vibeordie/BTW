@@ -232,6 +232,7 @@ limitations under the License.
         let data;
 		let textdata;
 		let textindex = 0;
+        let somefeedlines = '\u000A\u000A\u000A';		
 		
         progress.hidden = true;
         let image = document.querySelector('#image');
@@ -342,7 +343,7 @@ limitations under the License.
           let encoder = new TextEncoder("utf-8");
           // Add line feed + carriage return chars to text
 		  message.value = decodeURIComponent(mytext).replace(/\+/g, " ");
-          textdata = encoder.encode(message.value + '\u000A\u000D');
+          textdata = encoder.encode(message.value + '\u000A\u000D') + somefeedlines;
 		  return new Promise(function(resolve, reject) {
             sendNextTextDataBatch(resolve, reject);
           });
