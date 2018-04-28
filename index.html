@@ -373,6 +373,17 @@ limitations under the License.
             sendPrinterData();
           }
         });
+		disconnectButton.addEventListener('click', function () {
+		  if (!device) {
+			return;
+		  }
+		  log('Disconnecting from Bluetooth Device...');
+		  if (device.gatt.connected) {
+			device.gatt.disconnect();
+		  } else {
+			log('> Bluetooth Device is already disconnected');
+		  }
+        });
       });
     </script>
 <script>
