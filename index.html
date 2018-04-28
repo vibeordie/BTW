@@ -345,16 +345,18 @@ limitations under the License.
           })
           .catch(handleError);
         }
-        printButton.addEventListener('click', function () {
+		
+		printButton.addEventListener('click', function () {
           progress.hidden = false;
-          if (bluetoothDevice == null){
-		  if (printCharacteristic == null) {
+          if (printCharacteristic == null) {
             navigator.bluetooth.requestDevice({
               filters: [{
                 services: ['000018f0-0000-1000-8000-00805f9b34fb']
               }]
             })
             .then(device => {
+              console.log('> Found ' + device.name);
+              console.log('Connecting to GATT Server...');
               return device.gatt.connect();
             })
             .then(server => server.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb"))
@@ -365,20 +367,11 @@ limitations under the License.
               sendPrinterData();
             })
             .catch(handleError);
-          }} else {
-		  if (printCharacteristic == null) {
-            return bluetoothDevice.gatt.connect();
-            .then(server => server.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb"))
-            .then(service => service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb"))
-            .then(characteristic => {
-              // Cache the characteristic
-              printCharacteristic = characteristic;
-              sendPrinterData();
-            })
           } else {
-		      sendPrinterData();}
-		  }
+            sendPrinterData();
+          }
         });
+		
 		disconnectButton.addEventListener('click', function () {
 		  if (!bluetoothDevice) {
 			return;
@@ -460,7 +453,7 @@ function onButtonClick() {
 }
 
 function connect() {
-  exponentialBackoff(3 /* max retries */, 2 /* seconds delay */,
+  exponentialBackoff(10 /* max retries */, 10 /* seconds delay */,
     function toTry() {
       time('Connecting to Bluetooth Device... ');
       return bluetoothDevice.gatt.connect();
@@ -504,7 +497,7 @@ function exponentialBackoff(max, delay, toTry, success, fail) {
     time('Retrying in ' + delay + 's... (' + max + ' tries left)');
     setTimeout(function() {
       exponentialBackoff(--max, delay * 1, toTry, success, fail);
-    }, delay * 1000);
+    }, delay);
   });
 }
 
