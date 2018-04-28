@@ -74,11 +74,19 @@ limitations under the License.
       paper-button.colorful {
         color: #4285f4;
       }
-	  paper-button.darksalmon {
-        color: #E9967A;
+	  paper-button.greencolour {
+        color: #3CB371;
       }
 	  paper-button.redcolour {
         color: #FF0000;
+      }
+	  paper-button[raised].redcolour {
+        background: #FF0000;
+        color: #fff;
+      }
+	  paper-button[raised].greencolour {
+        background: #3CB371;
+        color: #fff;
       }
       paper-button[raised].colorful {
         background: #4285f4;
@@ -131,7 +139,7 @@ limitations under the License.
 	  
 	  <paper-card>     
 	    <div class="card-content">
-          <paper-button id="connectbtn" raised class="darksalmon">Connect</paper-button>
+          <paper-button id="connectbtn" raised class="greencolour">Connect</paper-button>
         </div>
       </paper-card>
 	  
@@ -364,17 +372,6 @@ limitations under the License.
           } else {
             sendPrinterData();
           }
-        });
-		
-		disconnectButton.addEventListener('click', function () {
-		  if (!device) {
-		     return;
-		  }
-		  if (device.gatt.connected) {
-		    device.gatt.disconnect();
-		  } else {
-		    log('> Bluetooth Device connected. Try disconnect it now.');
-		  }
         });
       });
     </script>
