@@ -77,6 +77,9 @@ limitations under the License.
 	  paper-button.darksalmon {
         color: #E9967A;
       }
+	  paper-button.redcolour {
+        color: #FF0000;
+      }
       paper-button[raised].colorful {
         background: #4285f4;
         color: #fff;
@@ -125,21 +128,22 @@ limitations under the License.
           <paper-textarea id="message" label="Enter Message"></paper-textarea>
         </div>
       </paper-card>
-
-      <paper-card>
+	  
+	  <paper-card>     
+	    <div class="card-content">
+          <paper-button id="connectbtn" raised class="darksalmon">Connect</paper-button>
+        </div>
+      </paper-card>
+	  
+	  <paper-card>
         <div class="card-content">
           <paper-button id="print" raised class="colorful">Print</paper-button>
         </div>
       </paper-card>
+	  
 	  <paper-card>
         <div class="card-content">
-          <paper-button id="disconnectbtn" raised class="colorful">Disconnect</paper-button>
-        </div>
-      </paper-card>
-	  
-	  <paper-card>     
-	  <div class="card-content">
-          <paper-button id="connectbtn" raised class="darksalmon">Connect</paper-button>
+          <paper-button id="disconnectbtn" raised class="redcolour">Disconnect</paper-button>
         </div>
       </paper-card>
       
@@ -361,6 +365,7 @@ limitations under the License.
             sendPrinterData();
           }
         });
+		
 		disconnectButton.addEventListener('click', function () {
 		  if (!device) {
 		     return;
