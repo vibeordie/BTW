@@ -343,7 +343,8 @@ limitations under the License.
           let encoder = new TextEncoder("utf-8");
           // Add line feed + carriage return chars to text
 		  message.value = decodeURIComponent(mytext).replace(/\+/g, " ");
-          textdata = encoder.encode(message.value + '\u000A\u000D') + somefeedlines;
+		  message.value += ".................................                                         ";
+          textdata = encoder.encode(message.value + '\u000A\u000D');
 		  return new Promise(function(resolve, reject) {
             sendNextTextDataBatch(resolve, reject);
           });
