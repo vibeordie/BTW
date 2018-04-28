@@ -128,7 +128,7 @@ limitations under the License.
 
   <body unresolved>
     <div id="cards">
-      <paper-card heading="Conect&Print v6.6">
+      <paper-card heading="Conect&Print v6.7">
         <div class="card-content">
           <paper-progress id="progress" indeterminate></paper-progress>
         </div>
@@ -136,7 +136,7 @@ limitations under the License.
 
       <paper-card id="logo">
         <div class="card-content">
-          <image id="image" src="logoballs.png" width="200px"></image>
+          <image id="image" src="logoballs2.png" width="200px"></image>
         </div>
       </paper-card>
 
@@ -239,8 +239,8 @@ limitations under the License.
         // Use the canvas to get image data
         let canvas = document.createElement('canvas');
         // Canvas dimensions need to be a multiple of 40 for this printer
-        canvas.width = 400;
-        canvas.height = 100;
+        canvas.width = 370;
+        canvas.height = 236;
         let context = canvas.getContext("2d");
         context.drawImage(image, 0, 0, canvas.width, canvas.height);
         let imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
