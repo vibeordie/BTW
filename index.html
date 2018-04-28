@@ -23,7 +23,7 @@ limitations under the License.
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>Bluetooth Printer</title>
+    <title>Bilhete Impresso</title>
     <script>
       // Add a global error event listener early on in the page load, to help ensure that browsers
       // which don't support specific functionality still end up displaying a meaningful message.
@@ -142,31 +142,31 @@ limitations under the License.
 
       <paper-card>
         <div class="card-content">
-          <paper-textarea id="message" label=Enter Message></paper-textarea>
+          <paper-textarea id="message" label=Color ticket aquí></paper-textarea>
         </div>
       </paper-card>
 	  
 	  <paper-card>     
 	    <div class="card-content">
-          <paper-button id="connectbtn" raised class="greencolour">Connect</paper-button>
+          <paper-button id="connectbtn" raised class="greencolour">Conectar</paper-button>
         </div>
       </paper-card>
 	  
 	  <paper-card>
         <div class="card-content">
-          <paper-button id="print" raised class="colorful">Print</paper-button>
+          <paper-button id="print" raised class="colorful">Printar</paper-button>
         </div>
       </paper-card>
 	  
 	  <paper-card>
         <div class="card-content">
-          <paper-button id="disconnectbtn" raised class="redcolour">Disconnect</paper-button>
+          <paper-button id="disconnectbtn" raised class="redcolour">Desconectar</paper-button>
         </div>
       </paper-card>
       
       <paper-dialog id="dialog">
-        <h2>Error</h2>
-        <p>Could not connect to bluetooth device!</p>
+        <h2>Falhou</h2>
+        <p>Primeiro tem que conectar a impresora com conectar até que a lúz dela fique permanentemente acesa!</p>
       </paper-dialog>
     </div>	
 
@@ -368,8 +368,8 @@ limitations under the License.
               }]
             })
             .then(device => {
-              console.log('> Found ' + device.name);
-              console.log('Connecting to GATT Server...');
+              console.log('> Achado ' + device.name);
+              console.log('Conectando com o GAT da impresora...');
               return device.gatt.connect();
             })
             .then(server => server.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb"))
@@ -389,11 +389,11 @@ limitations under the License.
 		  if (!bluetoothDevice) {
 			return;
 		  }
-		  log('Disconnecting from Bluetooth Device...');
+		  log('Desconectando a impresora...');
 		  if (bluetoothDevice.gatt.connected) {
 			bluetoothDevice.gatt.disconnect();
 		  } else {
-			log('> Bluetooth Device is already disconnected');
+			log('> A impresora já está desconectada');
 		  }
         });
       });
@@ -426,7 +426,7 @@ limitations under the License.
   };
 </script>
 
-<h3>Live Output</h3>
+<h3>Detalhes de conexão - se falhar, tente de novo</h3>
 <div id="output" class="output">
   <div id="content"></div>
   <div id="status"></div>
@@ -439,7 +439,7 @@ limitations under the License.
     // Let's log a warning if the sample is not supposed to execute on this
     // version of Chrome.
     if (52 > parseInt(RegExp.$1)) {
-      ChromeSamples.setStatus('Warning! Keep in mind this sample has been tested with Chrome ' + 52 + '.');
+      ChromeSamples.setStatus('Atenção! Essa app só funciona com versoes de chrome maiores do que ' + 52 + '.');
     }
   }
 </script>
@@ -449,7 +449,7 @@ limitations under the License.
 
 function onButtonClick() {
   bluetoothDevice = null;
-  log('Requesting any Bluetooth Device...');
+  log('Procurando a impresora Feasycom...');
               navigator.bluetooth.requestDevice({
               filters: [{
                 services: ['000018f0-0000-1000-8000-00805f9b34fb']
@@ -468,14 +468,14 @@ function onButtonClick() {
 function connect() {
   exponentialBackoff(10 /* max retries */, 10 /* seconds delay */,
     function toTry() {
-      time('Connecting to Bluetooth Device... ');
+      time('Tentando conexão com a impresora... ');
       return bluetoothDevice.gatt.connect();
     },
     function success() {
-      log('> Bluetooth Device connected. Try disconnect it now.');
+      log('> Impresora conectada. Clique em Printar ou desconecte-se');
     },
     function fail() {
-      time('Failed to reconnect.');
+      time('Falhou a conexão. Tentar de novo');
     });
 }
 
@@ -483,16 +483,16 @@ function onDisconnectButtonClick() {
   if (!bluetoothDevice) {
     return;
   }
-  log('Disconnecting from Bluetooth Device...');
+  log('Desconectando a impresora...');
   if (bluetoothDevice.gatt.connected) {
     bluetoothDevice.gatt.disconnect();
   } else {
-    log('> Bluetooth Device is already disconnected');
+    log('> A impresora já está desconectado');
   }
 }
 
 function onDisconnected() {
-  log('> Bluetooth Device disconnected');
+  log('> Impresora desconectada');
   connect();
 }
 
@@ -547,8 +547,8 @@ function time(text) {
     if (navigator.bluetooth) {
       return true;
     } else {
-      ChromeSamples.setStatus('Web Bluetooth API is not available.\n' +
-          'Please make sure the "Experimental Web Platform features" flag is enabled.');
+      ChromeSamples.setStatus('O Api da WEB BLUETOOTH não está disponível.\n' +
+          'Se estiver em Desktop tem que ativar o flag "Opçoes experimentais de Plataforma Web".');
       return false;
     }
   }
