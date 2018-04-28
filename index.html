@@ -218,7 +218,7 @@ limitations under the License.
 </script>
 
     <script>
-	  document.getElementById("message").innerHTML = mytext
+	  document.getElementById("message").innerHTML = decodeURIComponent(mytext);
       'use strict';
       document.addEventListener('WebComponentsReady', function() {
         let progress = document.querySelector('#progress');
