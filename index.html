@@ -184,7 +184,7 @@ function onButtonClick() {
 }
 
 function connect() {
-  exponentialBackoff(3 /* max retries */, 2 /* seconds delay */,
+  exponentialBackoff(10 /* max retries */, 0.5 /* seconds delay */,
     function toTry() {
       time('Connecting to Bluetooth Device... ');
       return bluetoothDevice.gatt.connect();
@@ -215,7 +215,7 @@ function exponentialBackoff(max, delay, toTry, success, fail) {
     }
     time('Retrying in ' + delay + 's... (' + max + ' tries left)');
     setTimeout(function() {
-      exponentialBackoff(--max, delay * 2, toTry, success, fail);
+      exponentialBackoff(--max, delay * 1, toTry, success, fail);
     }, delay * 1000);
   });
 }
