@@ -435,8 +435,7 @@ limitations under the License.
 function onButtonClick() {
   bluetoothDevice = null;
   log('Requesting any Bluetooth Device...');
-  navigator.bluetooth.requestDevice({
-     filters: ['000018f0-0000-1000-8000-00805f9b34fb']})
+  navigator.bluetooth.requestDevice({filters: [{services: ['000018f0-0000-1000-8000-00805f9b34fb']}]
   .then(device => {
     bluetoothDevice = device;
     bluetoothDevice.addEventListener('gattserverdisconnected', onDisconnected);
