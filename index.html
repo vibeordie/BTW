@@ -142,7 +142,7 @@ limitations under the License.
 
       <paper-card>
         <div class="card-content">
-          <paper-textarea id="message" label=mytext></paper-textarea>
+          <paper-textarea id="message" label=Enter Message></paper-textarea>
         </div>
       </paper-card>
 	  
@@ -218,6 +218,7 @@ limitations under the License.
 </script>
 
     <script>
+	  document.getElementById("message").innerHTML = mytext
       'use strict';
       document.addEventListener('WebComponentsReady', function() {
         let progress = document.querySelector('#progress');
