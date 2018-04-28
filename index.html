@@ -165,13 +165,12 @@ href="automatic-reconnect-async-await.html">Automatic Reconnect (Async Await)</a
 
   
     
-      <script>var bluetoothDevice;
+<script>var bluetoothDevice;
 
 function onButtonClick() {
   bluetoothDevice = null;
   log('Requesting any Bluetooth Device...');
-  navigator.bluetooth.requestDevice(
-     filters: ['000018f0-0000-1000-8000-00805f9b34fb']
+  navigator.bluetooth.requestDevice({filters: ['000018f0-0000-1000-8000-00805f9b34fb' optionalServices = true}]
      )
   .then(device => {
     bluetoothDevice = device;
