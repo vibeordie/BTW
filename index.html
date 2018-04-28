@@ -23,7 +23,7 @@ limitations under the License.
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>Bilhete Impresso</title>
+    <title>Bilhete Impresso 7.4</title>
     <script>
       // Add a global error event listener early on in the page load, to help ensure that browsers
       // which don't support specific functionality still end up displaying a meaningful message.
@@ -128,7 +128,7 @@ limitations under the License.
 
   <body unresolved>
     <div id="cards">
-      <paper-card heading="Bilhete Impresso">
+      <paper-card heading="BILHETE IMPRESSO">
         <div class="card-content">
           <paper-progress id="progress" indeterminate></paper-progress>
         </div>
@@ -507,7 +507,7 @@ function exponentialBackoff(max, delay, toTry, success, fail) {
     if (max === 0) {
       return fail();
     }
-    time('Retrying in ' + delay + 's... (' + max + ' tries left)');
+    time('Tentando de novo em ' + delay + 'ms... mais (' + max + ' intentos)');
     setTimeout(function() {
       exponentialBackoff(--max, delay * 1, toTry, success, fail);
     }, delay);
