@@ -129,6 +129,10 @@ limitations under the License.
         @apply(--layout-vertical);
         @apply(--layout-center);
       }
+	  paper-card#label {
+        @apply(--layout-vertical);
+        @apply(--layout-center);
+      }
 	  
     </style>
     <link rel="stylesheet" href="../styles/main.css">
@@ -136,7 +140,7 @@ limitations under the License.
 
   <body unresolved>
     <div id="cardsheaderbr">
-      <paper-card label="BILHETE IMPRESSO">
+      <paper-card heading-center="BILHETE IMPRESSO">
         <div class="card-content">
           <paper-progress id="progress" indeterminate></paper-progress>
         </div>
