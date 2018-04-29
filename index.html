@@ -475,7 +475,11 @@ function connect() {
       return bluetoothDevice.gatt.connect();
     },
     function success() {
-      log('> Impresora conectada. Clique em Printar ou desconecte-se');
+      if (bluetoothDevice.gatt.connected) {
+        log('> Impresora conectada. Pode printar agora.');
+      } else {
+        log('> A impresora já está desconectada');
+      }
     },
     function fail() {
       time('Falhou a conexão. Tentar de novo');
