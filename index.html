@@ -477,11 +477,6 @@ function onButtonClick() {
     bluetoothDevice = device;
     bluetoothDevice.addEventListener('gattserverdisconnected', onDisconnected);
     connect();
-    .then(server => server.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb"))
-    .then(service => service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb"))
-    .then(characteristic => {
-            // Cache the characteristi
-	  printCharacteristic = characteristic;
   })
   .catch(error => {
     log('Argh! ' + error);
