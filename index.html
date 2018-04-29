@@ -23,7 +23,7 @@ limitations under the License.
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>Bilhete Impresso 7.4</title>
+    <title>Bilhete Impresso 7.5</title>
     <script>
       // Add a global error event listener early on in the page load, to help ensure that browsers
       // which don't support specific functionality still end up displaying a meaningful message.
@@ -43,7 +43,6 @@ limitations under the License.
 	  };
 	  var number = getUrlVars()["x"];
       var mytext = getUrlVars()["text"];
-	  document.body.style.backgroundColor = "green";
     </script>
 	<script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
 
@@ -63,9 +62,6 @@ limitations under the License.
     <link rel="stylesheet" href="bower_components/paper-styles/demo.css">
 
     <style is="custom-style">
-	  body {
-        background-color: lightgreen;
-      }
 	  paper-progress {
         width: 100%;
       }
@@ -110,7 +106,7 @@ limitations under the License.
         paper-button-flat-focus-color: var(--paper-light-blue-50);
       }
       body {
-        background-color: var(--paper-grey-50);
+        background-color: var(--paper-green-50);
       }
       #cards {
         margin-left: auto;
