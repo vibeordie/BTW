@@ -136,7 +136,7 @@ limitations under the License.
 
   <body unresolved>
     <div id="cardsheaderbr">
-      <paper-card center-justified flex heading="BILHETE IMPRESSO">
+      <paper-card label="BILHETE IMPRESSO">
         <div class="card-content">
           <paper-progress id="progress" indeterminate></paper-progress>
         </div>
@@ -478,7 +478,7 @@ function connect() {
       if (bluetoothDevice.gatt.connected) {
         log('> Impresora conectada. Pode printar agora.');
       } else {
-        log('> A impresora já está desconectada');
+        log('> A impresora está desconectada');
       }
     },
     function fail() {
