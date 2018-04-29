@@ -113,6 +113,13 @@ limitations under the License.
         margin-right: auto;
         max-width: 400px;
       }
+	  #cardsheaderbr {
+	    background: #b4ddb4; /* Old browsers */
+        background: -moz-linear-gradient(45deg, #b4ddb4 0%, #83c783 17%, #dcf271 39%, #f2ea00 53%, #005700 83%, #002400 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(45deg, #b4ddb4 0%,#83c783 17%,#dcf271 39%,#f2ea00 53%,#005700 83%,#002400 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(45deg, #b4ddb4 0%,#83c783 17%,#dcf271 39%,#f2ea00 53%,#005700 83%,#002400 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b4ddb4', endColorstr='#002400',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+      }
       paper-card {
         margin-bottom: 5px;
         margin-top: 5px;
@@ -122,12 +129,13 @@ limitations under the License.
         @apply(--layout-vertical);
         @apply(--layout-center);
       }
+	  
     </style>
     <link rel="stylesheet" href="../styles/main.css">
   </head>
 
   <body unresolved>
-    <div id="cards">
+    <div id="cardsheaderbr">
       <paper-card heading="BILHETE IMPRESSO">
         <div class="card-content">
           <paper-progress id="progress" indeterminate></paper-progress>
