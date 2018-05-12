@@ -387,6 +387,15 @@ limitations under the License.
 		
 		printButton.addEventListener('click', function () {
           progress.hidden = false;
+          if (printCharacteristic == null) {
+            navigator.bluetooth.requestDevice({
+              filters: [{
+                services: ['000018f0-0000-1000-8000-00805f9b34fb']
+              }]
+            })
+            .then(device => {
+              console.log('> Achado ' + device.name);
+              console.log('Conectando com o GAT da impresora...');
               return device.gatt.connect();
             })
             .then(server => server.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb"))
