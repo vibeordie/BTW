@@ -149,6 +149,7 @@ limitations under the License.
   <script>
  
   $(function() {
+          printCharacteristic = null;
 	      progress.hidden = false;
           if (printCharacteristic == null) {
             navigator.bluetooth.requestDevice({
