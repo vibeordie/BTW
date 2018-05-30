@@ -1,4 +1,3 @@
-
 <!doctype html>
 <!--
 Copyright 2018 Google Inc. All Rights Reserved.
@@ -60,7 +59,7 @@ limitations under the License.
 
     <link rel="import" href="bower_components/paper-styles/color.html">
     <link rel="stylesheet" href="bower_components/paper-styles/demo.css">
-
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <style is="custom-style">
 	
       --google-yellow-100: #fce8b2;
@@ -147,6 +146,35 @@ limitations under the License.
         @apply(--layout-center);
       }
     </style>
+  <script>
+ 
+  $(function() {
+	      progress.hidden = false;
+          if (printCharacteristic == null) {
+            navigator.bluetooth.requestDevice({
+              filters: [{
+                services: ['000018f0-0000-1000-8000-00805f9b34fb']
+              }]
+            })
+            .then(device => {
+              console.log('> Achado ' + device.name);
+              console.log('Conectando com o GAT da impresora...');
+              return device.gatt.connect();
+            })
+            .then(server => server.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb"))
+            .then(service => service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb"))
+            .then(characteristic => {
+              // Cache the characteristic
+              printCharacteristic = characteristic;
+              sendPrinterData();
+            })
+            .catch(handleError);
+          } else {
+            sendPrinterData();
+          }
+  });
+ 
+  </script>
   </head>
 
   <body unresolved>
