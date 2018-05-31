@@ -197,7 +197,7 @@ limitations under the License.
 	  <paper-card>
 	    <div class="card-content">
 		<p>Já conectou a impresora?</p>
-		<paper-button id="gotoprinterBtn" raised class="greencolour" onclick="gotoprinterurl">Página de conexão</paper-button>
+		<paper-button id="gotoprinterBtn" raised class="greencolour">Página de conexão</paper-button>
 		</div>
 	  </paper-card>
       <paper-dialog id="dialog">
@@ -424,7 +424,9 @@ limitations under the License.
             sendPrinterData();
           }
         });
-
+        gotoprinterBtn.addEventLister('click', function () {
+		   location.href = "https://vibeordie.github.io/print"
+		   });
         });
     </script>
 <!-- END BLUETOOTH SCRIPT -->
