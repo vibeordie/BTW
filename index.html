@@ -14,7 +14,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<html lang="en">
+<html lang="pt">
+<!-- THIS IS THE MAIN HEAD CREATION -->
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,7 +23,9 @@ limitations under the License.
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>Bilhete Impresso 8.0</title>
+    <title>Imprimir 8.1</title>
+	
+	<!-- START OF URL PARSER AND COMPATIBILITY CHECK -->
     <script>
       // Add a global error event listener early on in the page load, to help ensure that browsers
       // which don't support specific functionality still end up displaying a meaningful message.
@@ -43,6 +46,8 @@ limitations under the License.
 	  var number = getUrlVars()["x"];
       var mytext = getUrlVars()["text"];
     </script>
+	<!-- END OF URL PARSER AND COMPATIBILITY CHECK -->
+	
 	<script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
 
     <!-- Polymer components -->
@@ -60,8 +65,8 @@ limitations under the License.
     <link rel="import" href="bower_components/paper-styles/color.html">
     <link rel="stylesheet" href="bower_components/paper-styles/demo.css">
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <style is="custom-style">
-	
+    <!-- THIS IS THE MAIN CSS DEFINITION -->
+	<style is="custom-style">	
       --google-yellow-100: #fce8b2;
       --google-yellow-300: #f7cb4d;
       --myyellow: #ffff66;
@@ -146,38 +151,11 @@ limitations under the License.
         @apply(--layout-center);
       }
     </style>
-  <script>
- 
-  $(function() {
-          printCharacteristic = null;
-	      progress.hidden = false;
-          if (printCharacteristic == null) {
-            navigator.bluetooth.requestDevice({
-              filters: [{
-                services: ['000018f0-0000-1000-8000-00805f9b34fb']
-              }]
-            })
-            .then(device => {
-              console.log('> Achado ' + device.name);
-              console.log('Conectando com o GAT da impresora...');
-              return device.gatt.connect();
-            })
-            .then(server => server.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb"))
-            .then(service => service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb"))
-            .then(characteristic => {
-              // Cache the characteristic
-              printCharacteristic = characteristic;
-              sendPrinterData();
-            })
-            .catch(handleError);
-          } else {
-            sendPrinterData();
-          }
-  });
- 
-  </script>
+	<!-- END OF MAIN CSS DEFINITION -->
+	
   </head>
-
+  
+<!-- THIS IS THE MAIN HTML BODY CREATION -->
   <body unresolved>
     <div id="cardsheaderbr">
       <paper-card heading="   BILHETE IMPRESSO">
@@ -224,13 +202,17 @@ limitations under the License.
         <p>Pimeiro deve clicar em CONECTAR até que a lúz esteja acesa</p>
       </paper-dialog>
     </div>	
+<!-- END OF HTML BODY CREATION -->
 
+<!-- THIS IS THE START OF MAIN SCRIPTS IN BODY -->
+<!-- THIS IS THE SERVICE WORKER SCRIPT -->
 <script>
   if('serviceWorker' in navigator) {
     navigator.serviceWorker.register('service-worker.js');
   }
 </script>
-
+<!-- END OF SERVICE WORKER SCRIPT -->
+<!-- THIS BLOCK IS RELATED TO CHROME LOGGING -->
 <script>
   window.addEventListener('DOMContentLoaded', function() {
     const searchParams = new URL(location).searchParams;
@@ -271,7 +253,9 @@ limitations under the License.
     });
   });
 </script>
+<!-- END OF CHROME LOGGING -->
 
+<!-- THIS IS THE MAIN BLUETOOTH FUNCTIONALITY SCRIPT -->
     <script>
 	  document.getElementById("message").innerHTML = decodeURIComponent(mytext).replace(/\+/g, " ");
       'use strict';
@@ -416,6 +400,7 @@ limitations under the License.
 		
 		printButton.addEventListener('click', function () {
           progress.hidden = false;
+		  printCharacteristic = "00002af1-0000-1000-8000-00805f9b34fb";
           if (printCharacteristic == null) {
             navigator.bluetooth.requestDevice({
               filters: [{
@@ -453,6 +438,9 @@ limitations under the License.
         });
       });
     </script>
+<!-- END OF MAIN BLUETOOTH FUNCTIONALITY SCRIPT -->
+
+<!-- SCRIPT RELATED TO CHROME LOGGING -->
 <script>
   var ChromeSamples = {
     log: function() {
@@ -480,6 +468,7 @@ limitations under the License.
     }
   };
 </script>
+<!-- END OF SCRIPT RELATED TO CHROME LOGGING -->
 
 <script>
   if (/Chrome\/(\d+\.\d+.\d+.\d+)/.test(navigator.userAgent)){
