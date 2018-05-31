@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<html lang="pt">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,7 +22,7 @@ limitations under the License.
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>Imprimir</title>
+    <title>Bilhete Impresso 8.0</title>
     <script>
       // Add a global error event listener early on in the page load, to help ensure that browsers
       // which don't support specific functionality still end up displaying a meaningful message.
@@ -146,7 +146,36 @@ limitations under the License.
         @apply(--layout-center);
       }
     </style>
+  <script>
  
+  $(function() {
+          printCharacteristic = null;
+	      progress.hidden = false;
+          if (printCharacteristic == null) {
+            navigator.bluetooth.requestDevice({
+              filters: [{
+                services: ['000018f0-0000-1000-8000-00805f9b34fb']
+              }]
+            })
+            .then(device => {
+              console.log('> Achado ' + device.name);
+              console.log('Conectando com o GAT da impresora...');
+              return device.gatt.connect();
+            })
+            .then(server => server.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb"))
+            .then(service => service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb"))
+            .then(characteristic => {
+              // Cache the characteristic
+              printCharacteristic = characteristic;
+              sendPrinterData();
+            })
+            .catch(handleError);
+          } else {
+            sendPrinterData();
+          }
+  });
+ 
+  </script>
   </head>
 
   <body unresolved>
@@ -388,12 +417,14 @@ limitations under the License.
 		printButton.addEventListener('click', function () {
           progress.hidden = false;
           if (printCharacteristic == null) {
-            <!-- navigator.bluetooth.requestDevice({ -->
-              <!-- filters: [{ -->
-                <!-- services: ['000018f0-0000-1000-8000-00805f9b34fb'] -->
-              <!-- }] -->
-            <!-- }) -->
-            <!-- .then(device => { -->
+            navigator.bluetooth.requestDevice({
+              filters: [{
+                services: ['000018f0-0000-1000-8000-00805f9b34fb']
+              }]
+            })
+            .then(device => {
+              console.log('> Achado ' + device.name);
+              console.log('Conectando com o GAT da impresora...');
               return device.gatt.connect();
             })
             .then(server => server.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb"))
@@ -479,6 +510,41 @@ function onButtonClick() {
   .catch(error => {
     log('Argh! ' + error);
   });
+}
+
+function connect() {
+  exponentialBackoff(10 /* max retries */, 10 /* seconds delay */,
+    function toTry() {
+      time('Tentando conexão com a impresora... ');
+      return bluetoothDevice.gatt.connect();
+    },
+    function success() {
+      if (bluetoothDevice.gatt.connected) {
+        log('> Impresora conectada. Pode printar agora.');
+      } else {
+        log('> A impresora está desconectada');
+      }
+    },
+    function fail() {
+      time('Falhou a conexão. Tentar de novo');
+    });
+}
+
+function onDisconnectButtonClick() {
+  if (!bluetoothDevice) {
+    return;
+  }
+  log('Desconectando a impresora...');
+  if (bluetoothDevice.gatt.connected) {
+    bluetoothDevice.gatt.disconnect();
+  } else {
+    log('> A impresora já está desconectada');
+  }
+}
+
+function onDisconnected() {
+  log('> Impresora desconectada');
+  connect();
 }
 
 /* Utils */
