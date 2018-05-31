@@ -421,7 +421,8 @@ limitations under the License.
             })
             .catch(handleError);
           } else {
-		    return device.gatt.connect();
+		    device = navigator.bluetoothDevice();
+	        device.gatt.connect;
             sendPrinterData();
           }
         });
