@@ -179,19 +179,9 @@ limitations under the License.
         </div>
       </paper-card>
 	  
-	  <paper-card>     
-	    <div class="card-content">
-          <paper-button id="connectbtn" raised class="greencolour" style="display:none;">Conectar</paper-button>
-        </div>
-		
         <div class="card-content">
           <paper-button id="print" raised class="colorful">Printar</paper-button>
         </div>
-		
-        <div class="card-content">
-          <paper-button id="disconnectbtn" raised class="redcolour" style="display:none;">Desconectar</paper-button>
-        </div>
-      </paper-card>
 	  
 	  <paper-card>
 	    <div class="card-content" style="display:none;">
@@ -207,7 +197,7 @@ limitations under the License.
 	  <paper-card>
 	    <div class="card-content">
 		<p>Já conectou a impresora?</p>
-		<paper-button id="gotoprinter" raised class="greencolour" onclick="gotoprinterurl()">Página de conexão</paper-button>
+		<paper-button id="gotoprinter" raised class="greencolour" onclick="gotoprinterurl">Página de conexão</paper-button>
 		</div>
 	  </paper-card>
       <paper-dialog id="dialog">
@@ -434,22 +424,6 @@ limitations under the License.
             sendPrinterData();
           }
         });
-		
-		disconnectButton.addEventListener('click', function () {
-		  if (!bluetoothDevice) {
-			return;
-		  }
-		  log('Desconectando a impresora...');
-		  if (bluetoothDevice.gatt.connected) {
-			bluetoothDevice.gatt.disconnect();
-		  } else {
-			log('> A impresora já está desconectada');
-		  }
-        });
-		
-		gotoprinter() {
-		  location.href = "https://vibeordie.github.io/BTW/";
-		} 
 		
       });
     </script>
