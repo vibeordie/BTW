@@ -400,7 +400,6 @@ limitations under the License.
 		
 		printButton.addEventListener('click', function () {
           progress.hidden = false;
-		  printCharacteristic = "00002af1-0000-1000-8000-00805f9b34fb";
           if (printCharacteristic == null) {
             navigator.bluetooth.requestDevice({
               filters: [{
@@ -421,8 +420,6 @@ limitations under the License.
             })
             .catch(handleError);
           } else {
-		    device = navigator.bluetoothDevice();
-	        device.gatt.connect;
             sendPrinterData();
           }
         });
