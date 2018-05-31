@@ -197,9 +197,10 @@ limitations under the License.
 	  <paper-card>
 	    <div class="card-content">
 		<p>Já conectou a impresora?</p>
-		<paper-button id="gotoprinterBtn" raised class="greencolour">Página de conexão</paper-button>
+		<a href="https://vibeordie.github.io/print"><paper-button id="gotoprinterBtn" raised class="greencolour">Página de conexão</paper-button></a>
 		</div>
 	  </paper-card>
+	  
       <paper-dialog id="dialog">
         <h2>Erro</h2>
         <p>A impresora não está conectada</p>
@@ -425,7 +426,7 @@ limitations under the License.
           }
         });
         gotoprinterBtn.addEventLister('click', function () {
-		   location.href = "https://vibeordie.github.io/print"
+		   location.href = "https://vibeordie.github.io/print";
 		   });
         });
     </script>
