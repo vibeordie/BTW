@@ -156,7 +156,7 @@ limitations under the License.
 	<!-- END OF CSS STYLE -->
 	
   </head>
- <!-- END OF HEAD -->
+<!-- END OF HEAD -->
   
 <!-- BODY -->
   <body unresolved>
@@ -183,16 +183,19 @@ limitations under the License.
 	    <div class="card-content">
           <paper-button id="connectbtn" raised class="greencolour" style="display:none;">Conectar</paper-button>
         </div>
+		
         <div class="card-content">
           <paper-button id="print" raised class="colorful">Printar</paper-button>
         </div>
+		
         <div class="card-content">
           <paper-button id="disconnectbtn" raised class="redcolour" style="display:none;">Desconectar</paper-button>
         </div>
       </paper-card>
+	  
 	  <paper-card>
 	    <div class="card-content" style="display:none;">
-		  <center><h3>Detalhes de conexão</h3></center>
+		  <center><h3>Estado</h3></center>
           <div id="output" class="output">
           <div id="content"></div>
           <div id="status"></div>
@@ -200,9 +203,16 @@ limitations under the License.
           </div>
 	    </div>
       </paper-card>
+	  
+	  <paper-card>
+	    <div class="card-content">
+		<p>Já conectou a impresora?</p>
+		<paper-button id="gotoprinter" raised class="greencolour" onclick="gotoprinterurl()">Página de conexão</paper-button>
+		</div>
+	  </paper-card>
       <paper-dialog id="dialog">
-        <h2>Falhou</h2>
-        <p>Pimeiro deve clicar em CONECTAR até que a lúz esteja acesa</p>
+        <h2>Erro</h2>
+        <p>A impresora não está conectada</p>
       </paper-dialog>
     </div>	
 <!-- SCRIPTS -->
@@ -436,6 +446,11 @@ limitations under the License.
 			log('> A impresora já está desconectada');
 		  }
         });
+		
+		gotoprinter() {
+		  location.href = "https://vibeordie.github.io/BTW/";
+		} 
+		
       });
     </script>
 <!-- END BLUETOOTH SCRIPT -->
