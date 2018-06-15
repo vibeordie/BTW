@@ -55,19 +55,6 @@
 	
     <!-- CSS STYLE -->
 	<style is="custom-style">	
-      paper-card {
-        margin-bottom: 5px;
-        margin-top: 5px;
-        width: 100%;
-          --paper-card-header: {
-              background-color: var(--paper-blue-900);
-        };
-          --paper-card-header-color: #fff !important;
-		  --paper-card-content: {
-              background-color: var(--paper-yellow-a100);
-        };
-          --paper-card-content-color: #fff !important;
-      }
       paper-card#logo {
 	    background-color: var(--paper-yellow-a100);
         @apply(--layout-vertical);
@@ -86,7 +73,7 @@
 	
       <paper-card id="logo">
         <div class="card-content">
-          <image id="image" src="logoballs2.png" width="200px" style="display:none;"></image>
+          <image id="image" src="logoballs2.png" width="200px"></image>
         </div>
       </paper-card>
 
@@ -98,10 +85,11 @@
 	  
       <paper-card>	  
         <div class="card-content">
-          <paper-button id="print" class="btn-btnprimary">IMPRIMIR BLUETOOTH</paper-button>
+          <paper-button id="print">TOCAR AQUÍ</paper-button>
         </div>	  
 	  </paper-card>
 	  
+	   <!-- ESTE DIALOGO APARECE CUANDO HAY UN ERROR -->
       <paper-dialog id="dialog">
         <h2>Erro</h2>
         <p>A impresora não está online</p>
