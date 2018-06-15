@@ -1,0 +1,521 @@
+<!doctype html>
+<!--
+Copyright 2018 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html lang="pt">
+
+<!-- HEAD -->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Attempt connection and print">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Imprimir 8.2</title>
+	
+	<!-- URL PARSER AND ERROR LOGGING -->
+    <script>
+      // Add a global error event listener early on in the page load, to help ensure that browsers
+      // which don't support specific functionality still end up displaying a meaningful message.
+      window.addEventListener('error', function(error) {
+        if (ChromeSamples && ChromeSamples.setStatus) {
+          console.error(error);
+          ChromeSamples.setStatus(error.message + ' (Your browser may not support this feature.)');
+          error.preventDefault();
+        }
+      });
+	  function getUrlVars() {
+	  var vars = {};
+	  var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+	  vars[key] = value;
+	  });
+	  return vars;
+	  };
+	  var number = getUrlVars()["x"];
+      var mytext = getUrlVars()["text"];
+    </script>
+	<!-- END OF URL PARSER AND ERROR LOGGING -->
+	
+	
+	<script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <!-- Polymer components -->
+    <link rel="import" href="bower_components/paper-progress/paper-progress.html">
+    <link rel="import" href="bower_components/paper-slider/paper-slider.html">
+    <link rel="import" href="bower_components/paper-button/paper-button.html">
+    <link rel="import" href="bower_components/paper-card/paper-card.html">
+    <link rel="import" href="bower_components/paper-dialog/paper-dialog.html">
+    <link rel="import" href="bower_components/paper-input/paper-input.html">
+    <link rel="import" href="bower_components/paper-input/paper-input-container.html">
+    <link rel="import" href="bower_components/paper-input/paper-input-error.html">
+    <link rel="import" href="bower_components/paper-input/paper-input-char-counter.html">
+    <link rel="import" href="bower_components/paper-input/paper-textarea.html">
+
+    <link rel="import" href="bower_components/paper-styles/color.html">
+    <link rel="stylesheet" href="bower_components/paper-styles/demo.css">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+	
+    <!-- CSS STYLE -->
+	<style is="custom-style">	
+      --google-yellow-100: #fce8b2;
+      --google-yellow-300: #f7cb4d;
+      --myyellow: #ffff66;
+      --google-yellow-700: #f09300;
+
+	  paper-progress {
+        width: 100%;
+		background-color: #b4ddb4;
+      }
+      paper-progress.blue {
+        paper-progress-active-color: var(--paper-light-blue-500);
+        paper-progress-secondary-color: var(--paper-light-blue-100);
+     }
+      paper-slider {
+        width: 100%;
+      }
+      paper-slider.blue {
+        paper-slider-active-color: var(--paper-light-blue-500);
+        paper-slider-knob-color: var(--paper-light-blue-500);
+      }
+      paper-button {
+        display: block;
+        margin-bottom: 2px;
+      }
+      paper-button.colorful {
+        color: #4285f4;
+      }
+	  paper-button.greencolour {
+        color: #3CB371;
+      }
+	  paper-button.redcolour {
+        color: #FF0000;
+      }
+	  paper-button[raised].redcolour {
+        background: #FF0000;
+        color: #fff;
+      }
+	  paper-button[raised].greencolour {
+        background: #3CB371;
+        color: #fff;
+      }
+	  
+	  paper-button[raised].orangecolour {
+        background: #ffa500;
+        color: #fff;
+      }
+      paper-button[raised].colorful {
+        background: #4285f4;
+        color: #fff;
+      }
+      paper-button.blue {
+        color: var(--paper-light-blue-500);
+        paper-button-flat-focus-color: var(--paper-light-blue-50);
+      }
+      body {
+        background-color: #009933;
+      }
+      #cards {
+	    background-color: #fff;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 400px;
+      }
+	  #cardsheaderbr {
+	    background: #b4ddb4; /* Old browsers */
+        background: -moz-linear-gradient(45deg, #b4ddb4 0%, #83c783 17%, #dcf271 39%, #f2ea00 53%, #005700 83%, #002400 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(45deg, #b4ddb4 0%,#83c783 17%,#dcf271 39%,#f2ea00 53%,#005700 83%,#002400 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(45deg, #b4ddb4 0%,#83c783 17%,#dcf271 39%,#f2ea00 53%,#005700 83%,#002400 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b4ddb4', endColorstr='#002400',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+      }
+      paper-card {
+        margin-bottom: 5px;
+        margin-top: 5px;
+        width: 100%;
+          --paper-card-header: {
+              background-color: var(--paper-blue-900);
+        };
+          --paper-card-header-color: #fff !important;
+		  --paper-card-content: {
+              background-color: var(--paper-yellow-a100);
+        };
+          --paper-card-content-color: #fff !important;
+      }
+      paper-card#logo {
+	    background-color: var(--paper-yellow-a100);
+        @apply(--layout-vertical);
+        @apply(--layout-center);
+      }
+    </style>
+	<!-- END OF CSS STYLE -->
+	
+  </head>
+<!-- END OF HEAD -->
+  
+<!-- BODY -->
+  <body unresolved>
+    <div id="cardsheaderbr">
+      <paper-card heading="IMPRIMIR BILHETE" style="display:center;">
+        <div class="card-content">
+          <paper-progress id="progress" indeterminate></paper-progress>
+        </div>
+      </paper-card>
+
+      <paper-card id="logo style="display:none;">
+        <div class="card-content">
+          <image id="image" src="logoballs2.png" width="200px" style="display:none;"></image>
+        </div>
+      </paper-card>
+
+      <paper-card>
+        <div class="card-content">
+          <paper-textarea id="message" label="O ticket não foi importado do site"></paper-textarea>
+        </div>
+      </paper-card>
+	  
+        <div class="card-content">
+          <paper-button id="print" raised class="colorful">Printar</paper-button>
+        </div>
+	  
+	  <paper-card>
+	    <div class="card-content" style="display:none;">
+		  <center><h3>Estado</h3></center>
+          <div id="output" class="output">
+          <div id="content"></div>
+          <div id="status"></div>
+          <pre id="log"></pre>
+          </div>
+	    </div>
+      </paper-card>
+	  
+	  <paper-card>
+	    <div class="card-content">
+		<a href="https://prode24.com:8097/Home/Index"><paper-button id="gotoHomeBet" raised class="orangecolour">FAZER OUTRA APOSTA</paper-button></a>
+		</div>
+	  </paper-card>
+	  
+	  <paper-card>
+	    <div class="card-content">
+		<p>Não consegue imprimir? Accesse no botão embaixo:</p>
+		<a href="https://vibeordie.github.io/print" target="_blank"><paper-button id="gotoprinterBtn" raised class="greencolour">Página de conexão</paper-button></a>
+		</div>
+	  </paper-card>
+	  
+      <paper-dialog id="dialog">
+        <h2>Erro</h2>
+        <p>A impresora não está online</p>
+		<a href="https://vibeordie.github.io/print" target="_blank" ><p>Abrir página de conexão</p></a>
+      </paper-dialog>
+    </div>	
+<!-- SCRIPTS -->
+<!-- SERVICE WORKER -->
+<script>
+  if('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js');
+  }
+</script>
+<!-- END OF SERVICE WORKER -->
+
+<!-- CHROME LOGGING -->
+<script>
+  window.addEventListener('DOMContentLoaded', function() {
+    const searchParams = new URL(location).searchParams;
+    const inputs = Array.from(document.querySelectorAll('input[id]'));
+
+    inputs.forEach(input => {
+      if (searchParams.has(input.id)) {
+        if (input.type == 'checkbox') {
+          input.checked = searchParams.get(input.id);
+        } else {
+          input.value = searchParams.get(input.id);
+          input.blur();
+        }
+      }
+      if (input.type == 'checkbox') {
+        input.addEventListener('change', function(event) {
+          const newSearchParams = new URL(location).searchParams;
+          if (event.target.checked) {
+            newSearchParams.set(input.id, event.target.checked);
+          } else {
+            newSearchParams.delete(input.id);
+          }
+          history.replaceState({}, '', Array.from(newSearchParams).length ?
+              location.pathname + '?' + newSearchParams : location.pathname);
+        });
+      } else {
+        input.addEventListener('input', function(event) {
+          const newSearchParams = new URL(location).searchParams;
+          if (event.target.value) {
+            newSearchParams.set(input.id, event.target.value);
+          } else {
+            newSearchParams.delete(input.id);
+          }
+          history.replaceState({}, '', Array.from(newSearchParams).length ?
+              location.pathname + '?' + newSearchParams : location.pathname);
+        });
+      }
+    });
+  });
+</script>
+<!-- END OF CHROME LOGGING -->
+
+<!-- BLUETOOTH SCRIPT -->
+    <script>
+	  document.getElementById("message").innerHTML = decodeURIComponent(mytext).replace(/\+/g, " ");
+      'use strict';
+      document.addEventListener('WebComponentsReady', function() {
+        let progress = document.querySelector('#progress');
+        let dialog = document.querySelector('#dialog');
+        let message = document.querySelector('#message');
+        let printButton = document.querySelector('#print');
+
+        let printCharacteristic;
+        let index = 0;
+        let data;
+		let textdata;
+		let textindex = 0;
+        let somefeedlines = '\x0a\x0a\x0a';		
+		
+        progress.hidden = true;
+        let image = document.querySelector('#image');
+        // Use the canvas to get image data
+        let canvas = document.createElement('canvas');
+        // Canvas dimensions need to be a multiple of 40 for this printer
+        canvas.width = 360;
+        canvas.height = 240;
+        let context = canvas.getContext("2d");
+        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
+        function getDarkPixel(x, y) {
+          // Return the pixels that will be printed black
+          let red = imageData[((canvas.width * y) + x) * 4];
+          let green = imageData[((canvas.width * y) + x) * 4 + 1];
+          let blue = imageData[((canvas.width * y) + x) * 4 + 2];
+          return (red + green + blue) > 0 ? 1 : 0;
+        }
+        function getImagePrintData() {
+          if (imageData == null) {
+            console.log('No image to print!');
+            return new Uint8Array([]);
+          }
+          // Each 8 pixels in a row is represented by a byte
+          let printData = new Uint8Array(canvas.width / 8 * canvas.height + 8);
+          let offset = 0;
+          // Set the header bytes for printing the image
+          printData[0] = 29;  // Print raster bitmap
+          printData[1] = 118; // Print raster bitmap
+          printData[2] = 48; // Print raster bitmap
+          printData[3] = 0;  // Normal 203.2 DPI
+          printData[4] = canvas.width / 8; // Number of horizontal data bits (LSB)
+          printData[5] = 0; // Number of horizontal data bits (MSB)
+          printData[6] = canvas.height % 256; // Number of vertical data bits (LSB)
+          printData[7] = canvas.height / 256;  // Number of vertical data bits (MSB)
+          offset = 7;
+          // Loop through image rows in bytes
+          for (let i = 0; i < canvas.height; ++i) {
+            for (let k = 0; k < canvas.width / 8; ++k) {
+              let k8 = k * 8;
+              //  Pixel to bit position mapping
+              printData[++offset] = getDarkPixel(k8 + 0, i) * 128 + getDarkPixel(k8 + 1, i) * 64 +
+                          getDarkPixel(k8 + 2, i) * 32 + getDarkPixel(k8 + 3, i) * 16 +
+                          getDarkPixel(k8 + 4, i) * 8 + getDarkPixel(k8 + 5, i) * 4 +
+                          getDarkPixel(k8 + 6, i) * 2 + getDarkPixel(k8 + 7, i);
+            }
+          }
+          return printData;
+        }
+        function handleError(error) {
+          console.log(error);
+          progress.hidden = true;
+          printCharacteristic = null;
+          dialog.open();
+        }
+        function sendNextImageDataBatch(resolve, reject) {
+          // Can only write 512 bytes at a time to the characteristic
+          // Need to send the image data in 512 byte batches
+          if (index + 20 < data.length) {
+            printCharacteristic.writeValue(data.slice(index, index + 20)).then(() => {
+              index += 20;
+              sendNextImageDataBatch(resolve, reject);
+            })
+            .catch(error => reject(error));
+          } else {
+            // Send the last bytes
+            if (index < data.length) {
+              printCharacteristic.writeValue(data.slice(index, data.length)).then(() => {
+                resolve();
+              })
+              .catch(error => reject(error));
+            } else {
+              resolve();
+            }
+          }
+        }
+		function sendNextTextDataBatch(resolve, reject) {
+          // Can only write 512 bytes at a time to the characteristic
+          // Need to send the image data in 512 byte batches
+		  if (textindex + 20 < textdata.length) {
+            printCharacteristic.writeValue(textdata.slice(textindex, textindex + 20)).then(() => {
+              textindex += 20;
+              sendNextTextDataBatch(resolve, reject);
+            })
+            .catch(error => reject(error));
+          } else {
+            // Send the last bytes
+            if (textindex < textdata.length) {
+              printCharacteristic.writeValue(textdata.slice(textindex, textdata.length)).then(() => {
+                resolve();
+              })
+              .catch(error => reject(error));
+            } else {
+              resolve();
+            }
+          }
+        }
+        function sendImageData() {
+          index = 0;
+          data = getImagePrintData();
+          return new Promise(function(resolve, reject) {
+            sendNextImageDataBatch(resolve, reject);
+          });
+        }
+        function sendTextData() {
+		  textindex = 0;
+          // Get the bytes for the text
+          let encoder = new TextEncoder("utf-8");
+          // Add line feed + carriage return chars to text
+		  message.value = decodeURIComponent(mytext).replace(/\+/g, " ");
+		  message.value += "               .................                                         ";
+          textdata = encoder.encode(message.value + '\u000A\u000D');
+		  return new Promise(function(resolve, reject) {
+            sendNextTextDataBatch(resolve, reject);
+          });
+        }
+        function sendPrinterData() {
+          // Print an image followed by the text
+          sendImageData()
+          .then(sendTextData)
+          .then(() => {
+            progress.hidden = true;
+          })
+          .catch(handleError);
+        }
+		
+		printButton.addEventListener('click', function () {
+          progress.hidden = false;
+          if (printCharacteristic == null) {
+            navigator.bluetooth.requestDevice({
+              filters: [{
+                services: ['000018f0-0000-1000-8000-00805f9b34fb']
+              }]
+            })
+            .then(device => {
+              console.log('> Achado ' + device.name);
+              console.log('Conectando com o GAT da impresora...');
+              return device.gatt.connect();
+            })
+            .then(server => server.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb"))
+            .then(service => service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb"))
+            .then(characteristic => {
+              // Cache the characteristic
+              printCharacteristic = characteristic;
+              sendPrinterData();
+            })
+            .catch(handleError);
+          } else {
+            sendPrinterData();
+          }
+        });
+        gotoprinterBtn.addEventLister('click', function () {
+		   location.href = "https://vibeordie.github.io/print";
+		   });
+        });
+    </script>
+<!-- END BLUETOOTH SCRIPT -->
+
+<!-- CHROME LOGGING -->
+<script>
+  var ChromeSamples = {
+    log: function() {
+      var line = Array.prototype.slice.call(arguments).map(function(argument) {
+        return typeof argument === 'string' ? argument : JSON.stringify(argument);
+      }).join(' ');
+
+      document.querySelector('#log').textContent += line + '\n';
+    },
+
+    clearLog: function() {
+      document.querySelector('#log').textContent = '';
+    },
+
+    setStatus: function(status) {
+      document.querySelector('#status').textContent = status;
+    },
+
+    setContent: function(newContent) {
+      var content = document.querySelector('#content');
+      while(content.hasChildNodes()) {
+        content.removeChild(content.lastChild);
+      }
+      content.appendChild(newContent);
+    }
+  };
+</script>
+<!-- END CHROME LOGGING -->
+
+<!-- COMPATIBILITY CHECK WEB BLUETOOTH -->
+<script>
+  if (/Chrome\/(\d+\.\d+.\d+.\d+)/.test(navigator.userAgent)){
+    // Let's log a warning if the sample is not supposed to execute on this
+    // version of Chrome.
+    if (52 > parseInt(RegExp.$1)) {
+      ChromeSamples.setStatus('Atenção! Essa app só funciona com versoes de chrome maiores do que ' + 52 + '.');
+    }
+  }
+</script>
+<!-- END COMPATIBILITY CHECKS WEB BLUETOOTH -->
+
+<!-- BLUETOOTH AVAILABILITY -->
+<script>
+  log = ChromeSamples.log;
+
+  function isWebBluetoothEnabled() {
+    if (navigator.bluetooth) {
+      return true;
+    } else {
+      ChromeSamples.setStatus('O Api da WEB BLUETOOTH não está disponível.\n' +
+          'Se estiver em Desktop tem que ativar o flag "Opçoes experimentais de Plataforma Web".');
+      return false;
+    }
+  }
+</script>
+<!-- END OF BLUETOOTH AVAILABILITY -->
+
+<!-- GOOGLE ANALYTICS -->
+    <script>
+      /* jshint ignore:start */
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-53563471-1', 'auto');
+      ga('send', 'pageview');
+      /* jshint ignore:end */
+    </script>
+<!-- END OF GOOGLE ANALYTICS -->
+
+  </body>
+<!-- THIS IS THE END OF THE BODY -->
+
+</html>
