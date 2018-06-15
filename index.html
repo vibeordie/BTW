@@ -82,12 +82,8 @@
           <paper-textarea id="message" label="O ticket não foi importado do site"></paper-textarea>
         </div>
       </paper-card>
-	  
-      <paper-card>	  
-        <div class="card-content">
-          <paper-button id="print">TOCAR AQUÍ</paper-button>
-        </div>	  
-	  </paper-card>
+
+      <button id="print">TOCAR AQUÍ</button>
 	  
 	   <!-- ESTE DIALOGO APARECE CUANDO HAY UN ERROR -->
       <paper-dialog id="dialog">
@@ -106,7 +102,7 @@
 	  document.getElementById("message").innerHTML = decodeURIComponent(mytext).replace(/\+/g, " ");
       
 	  'use strict';
-	  // Cuando se cargaron todos los webcomponentes iniciamos la función
+	  // Escuchamos a un evento que informa que todos los webcomponents fueron cargados
       document.addEventListener('WebComponentsReady', function() {
 	    // Asignamos una variable para el objeto dialog que aparecerá si hay algún error.
         let dialog = document.querySelector('#dialog');
@@ -279,8 +275,7 @@
         }
 		
 		// Creamos una función que escucha clicks del elemento printButton que
-		// hemos asociado anteriormente al botón de impresión
-		
+		// hemos asociado anteriormente al web component button
 		printButton.addEventListener('click', function () {
           // En caso que aun no esté conectada la impresora o no haya una característica para usar en el cache
           if (printCharacteristic == null) {
