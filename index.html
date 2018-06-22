@@ -62,20 +62,22 @@
 <!-- BODY -->
   <body unresolved>
   
-    <div id="cardsheaderbr">
-	
+    <div id="cardsheaderbr" hidden>
+	  <!-- ESTE ES EL ELEMENTO QUE ALMACENARÁ LA IMAGEN CON EL LOGO -->
       <paper-card id="logo">
         <div class="card-content">
           <image id="image" src="logoballs2.png" width="200px"></image>
         </div>
       </paper-card>
-
+	  
+      <!-- ESTE ES EL ELEMENTO DONDE SE COLOCARÁ EL TEXTO DEL URLPARSER DECODIFICADO Y DEL QUE SE CODIFICARA A UTF -->
       <paper-card>
-        <div class="card-content">
+        <div class="card-content" hidden>
           <p id="message" label="O ticket não foi importado do site"></p>
         </div>
       </paper-card>
-
+	  
+      <!-- ESTE ES EL BOTON QUE SE LLAMARA printButton y tendrá un event listener que inicia el proceso -->
       <button id="print">TOCAR AQUÍ</button>
 	  
 	   <!-- ESTE DIALOGO APARECE CUANDO HAY UN ERROR -->
