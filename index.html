@@ -179,6 +179,7 @@
 		
 		// Función para manejo de errores
         function handleError(error) {
+		  console.log(error);
 		  // Si hay error entonces la caracteristica de bluetooth se resetea
           printCharacteristic = null;
 		  // Abre el webcomponent Dialog para informar el mensaje de error
